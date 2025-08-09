@@ -14,7 +14,7 @@ public class Seat {
 
     @Id
     @GeneratedValue
-    private Long seatId;
+    private int seatId;
 
     private String seatNumber; // e.g 12A
     private boolean isBooked;

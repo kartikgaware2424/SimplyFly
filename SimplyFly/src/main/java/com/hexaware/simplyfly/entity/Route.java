@@ -17,7 +17,7 @@ public class Route {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long routeId;
+    private int routeId;
 
     private String origin;      // e.g., Mumbai
     private String destination; // e.g., Delhi

@@ -22,7 +22,7 @@ public class Flight {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long flightId;
+	private int flightId;
 
 	private String flightName;
 

@@ -13,7 +13,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentRepository paymentRepo;
 
-	public Payment getPaymentById(Long id) {
+	public Payment getPaymentById(int id) {
 		return paymentRepo.findById(id).orElse(null);
 	}
 
@@ -21,7 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentRepo.findByStatus(status);
 	}
 
-	public Payment getPaymentByBooking(Long bookingId) {
+	public Payment getPaymentByBooking(int bookingId) {
 		return paymentRepo.findByBookingBookingId(bookingId);
 	}
 

@@ -7,7 +7,7 @@ public class Document {
 
     @Id
     @GeneratedValue
-    private Long documentId;
+    private int documentId;
 
     private String documentType; // e.g., "AADHAAR", "PASSPORT"
     private String documentNumber;

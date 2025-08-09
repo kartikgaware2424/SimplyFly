@@ -8,7 +8,7 @@ import com.hexaware.simplyfly.entity.User;
 public interface UserService {
 	User addUser(User user);
 
-	User getUserById(Long id);
+	User getUserById(int id);
 
 	List<User> getAllUsers();
 

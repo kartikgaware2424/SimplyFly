@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.hexaware.simplyfly.entity.BookedSeat;
 
 @Repository
-public interface BookedSeatRepository extends JpaRepository<BookedSeat, Long> {
-	List<BookedSeat> findByBookingBookingId(Long bookingId);
+public interface BookedSeatRepository extends JpaRepository<BookedSeat, Integer> {
+	List<BookedSeat> findByBookingBookingId(int bookingId);
 
-	List<BookedSeat> findByPassengerUserId(Long passengerId);
+	List<BookedSeat> findByPassengerUserId(int passengerId);
 }

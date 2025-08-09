@@ -17,7 +17,7 @@ public class FlightServiceImpl implements FlightService {
 		return flightRepo.save(flight);
 	}
 
-	public Flight getFlightById(Long id) {
+	public Flight getFlightById(int id) {
 		return flightRepo.findById(id).orElse(null);
 	}
 
@@ -25,7 +25,7 @@ public class FlightServiceImpl implements FlightService {
 		return flightRepo.findByRouteOriginAndRouteDestination(origin, destination);
 	}
 
-	public List<Flight> getFlightsByOwner(Long ownerId) {
+	public List<Flight> getFlightsByOwner(int ownerId) {
 		return flightRepo.findByOwnerUserId(ownerId);
 	}
 

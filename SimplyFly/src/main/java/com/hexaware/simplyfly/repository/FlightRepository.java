@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.hexaware.simplyfly.entity.Flight;
 
 @Repository
-public interface FlightRepository extends JpaRepository<Flight, Long> {
+public interface FlightRepository extends JpaRepository<Flight, Integer> {
 	List<Flight> findByRouteOriginAndRouteDestination(String origin, String destination);
 
-	List<Flight> findByOwnerUserId(Long ownerId);
+	List<Flight> findByOwnerUserId(int ownerId);
 }

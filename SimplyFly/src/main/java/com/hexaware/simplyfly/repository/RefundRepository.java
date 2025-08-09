@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.hexaware.simplyfly.entity.Refund;
 
 @Repository
-public interface RefundRepository extends JpaRepository<Refund, Long> {
-	List<Refund> findByUserUserId(Long userId);
+public interface RefundRepository extends JpaRepository<Refund, Integer> {
+	List<Refund> findByUserUserId(int userId);
 
-	Refund findByBookingBookingId(Long bookingId);
+	Refund findByBookingBookingId(int bookingId);
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class BookedSeat {
     @Id @GeneratedValue
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "booking_id")

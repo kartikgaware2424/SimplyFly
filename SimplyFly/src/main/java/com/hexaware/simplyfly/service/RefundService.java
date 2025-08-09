@@ -5,11 +5,11 @@ import java.util.List;
 import com.hexaware.simplyfly.entity.Refund;
 
 public interface RefundService {
-	Refund getRefundById(Long id);
+	Refund getRefundById(int id);
 
-	List<Refund> getRefundsByUser(Long userId);
+	List<Refund> getRefundsByUser(int userId);
 
-	Refund getRefundByBooking(Long bookingId);
+	Refund getRefundByBooking(int bookingId);
 
 	Refund addRefund(Refund refund);
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import com.hexaware.simplyfly.entity.Booking;
 
 public interface BookingService {
-	Booking getBookingById(Long id);
+	Booking getBookingById(int id);
 
-	List<Booking> getBookingsByUser(Long userId);
+	List<Booking> getBookingsByUser(int userId);
 
-	List<Booking> getBookingsByFlight(Long flightId);
+	List<Booking> getBookingsByFlight(int flightId);
 
 	List<Booking> getBookingsByStatus(String status);
 

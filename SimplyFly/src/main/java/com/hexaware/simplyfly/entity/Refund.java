@@ -22,7 +22,7 @@ public class Refund {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long refundId;
+    private int refundId;
 
     private double amount;
 

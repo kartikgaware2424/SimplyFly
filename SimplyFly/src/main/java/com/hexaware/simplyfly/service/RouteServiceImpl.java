@@ -13,7 +13,7 @@ public class RouteServiceImpl implements RouteService {
 	@Autowired
 	private RouteRepository routeRepo;
 
-	public Route getRouteById(Long id) {
+	public Route getRouteById(int id) {
 		return routeRepo.findById(id).orElse(null);
 	}
 

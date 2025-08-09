@@ -5,9 +5,9 @@ import java.util.List;
 import com.hexaware.simplyfly.entity.BookedSeat;
 
 public interface BookedSeatService {
-	List<BookedSeat> getBookedSeatsByBooking(Long bookingId);
+	List<BookedSeat> getBookedSeatsByBooking(int bookingId);
 
-	List<BookedSeat> getBookedSeatsByPassenger(Long passengerId);
+	List<BookedSeat> getBookedSeatsByPassenger(int passengerId);
 
 	BookedSeat addBookedSeat(BookedSeat bookedSeat);
 }

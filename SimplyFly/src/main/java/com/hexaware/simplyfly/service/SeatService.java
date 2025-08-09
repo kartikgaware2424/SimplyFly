@@ -5,9 +5,9 @@ import java.util.List;
 import com.hexaware.simplyfly.entity.Seat;
 
 public interface SeatService {
-	Seat getSeatById(Long id);
+	Seat getSeatById(int id);
 
-	List<Seat> getSeatsByFlight(Long flightId);
+	List<Seat> getSeatsByFlight(int flightId);
 
 	List<Seat> getSeatsByBookingStatus(boolean isBooked);
 

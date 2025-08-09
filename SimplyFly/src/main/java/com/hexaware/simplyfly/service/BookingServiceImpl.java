@@ -13,15 +13,15 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepo;
 
-    public Booking getBookingById(Long id) {
+    public Booking getBookingById(int id) {
         return bookingRepo.findById(id).orElse(null);
     }
 
-    public List<Booking> getBookingsByUser(Long userId) {
+    public List<Booking> getBookingsByUser(int userId) {
         return bookingRepo.findByUserUserId(userId);
     }
 
-    public List<Booking> getBookingsByFlight(Long flightId) {
+    public List<Booking> getBookingsByFlight(int flightId) {
         return bookingRepo.findByFlightFlightId(flightId);
     }
 

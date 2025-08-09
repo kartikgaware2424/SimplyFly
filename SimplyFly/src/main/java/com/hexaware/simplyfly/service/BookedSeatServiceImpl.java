@@ -13,11 +13,11 @@ public class BookedSeatServiceImpl implements BookedSeatService {
     @Autowired
     private BookedSeatRepository bookedSeatRepo;
 
-    public List<BookedSeat> getBookedSeatsByBooking(Long bookingId) {
+    public List<BookedSeat> getBookedSeatsByBooking(int bookingId) {
         return bookedSeatRepo.findByBookingBookingId(bookingId);
     }
 
-    public List<BookedSeat> getBookedSeatsByPassenger(Long passengerId) {
+    public List<BookedSeat> getBookedSeatsByPassenger(int passengerId) {
         return bookedSeatRepo.findByPassengerUserId(passengerId);
     }
 

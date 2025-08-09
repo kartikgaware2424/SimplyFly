@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.hexaware.simplyfly.entity.Payment;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 	List<Payment> findByStatus(String status);
 
-	Payment findByBookingBookingId(Long bookingId);
+	Payment findByBookingBookingId(int bookingId);
 }

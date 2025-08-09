@@ -13,15 +13,15 @@ public class RefundServiceImpl implements RefundService {
 	@Autowired
 	private RefundRepository refundRepo;
 
-	public Refund getRefundById(Long id) {
+	public Refund getRefundById(int id) {
 		return refundRepo.findById(id).orElse(null);
 	}
 
-	public List<Refund> getRefundsByUser(Long userId) {
+	public List<Refund> getRefundsByUser(int userId) {
 		return refundRepo.findByUserUserId(userId);
 	}
 
-	public Refund getRefundByBooking(Long bookingId) {
+	public Refund getRefundByBooking(int bookingId) {
 		return refundRepo.findByBookingBookingId(bookingId);
 	}
 

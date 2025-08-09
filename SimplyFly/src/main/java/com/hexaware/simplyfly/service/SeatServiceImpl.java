@@ -13,11 +13,11 @@ public class SeatServiceImpl implements SeatService {
     @Autowired
     private SeatRepository seatRepo;
 
-    public Seat getSeatById(Long id) {
+    public Seat getSeatById(int id) {
         return seatRepo.findById(id).orElse(null);
     }
 
-    public List<Seat> getSeatsByFlight(Long flightId) {
+    public List<Seat> getSeatsByFlight(int flightId) {
         return seatRepo.findByFlightFlightId(flightId);
     }
 
