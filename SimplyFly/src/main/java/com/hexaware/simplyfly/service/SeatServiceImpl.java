@@ -5,27 +5,77 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hexaware.simplyfly.dto.SeatDto;
+import com.hexaware.simplyfly.entity.Booking;
+import com.hexaware.simplyfly.entity.Flight;
 import com.hexaware.simplyfly.entity.Seat;
+import com.hexaware.simplyfly.exception.SeatNotAvailableException;
+import com.hexaware.simplyfly.repository.BookingRepository;
+import com.hexaware.simplyfly.repository.FlightRepository;
 import com.hexaware.simplyfly.repository.SeatRepository;
 
 @Service
 public class SeatServiceImpl implements SeatService {
-    @Autowired
-    private SeatRepository seatRepo;
 
-    public Seat getSeatById(int id) {
-        return seatRepo.findById(id).orElse(null);
-    }
+	@Autowired
+	private SeatRepository seatRepo;
 
-    public List<Seat> getSeatsByFlight(int flightId) {
-        return seatRepo.findByFlightFlightId(flightId);
-    }
+	@Autowired
+	private FlightRepository flightRepo;
 
-    public List<Seat> getSeatsByBookingStatus(boolean isBooked) {
-        return seatRepo.findByIsBooked(isBooked);
-    }
+	@Autowired
+	private BookingRepository bookingRepo;
 
-    public Seat addSeat(Seat seat) {
-        return seatRepo.save(seat);
-    }
+	@Override
+	public Seat getSeatById(int id) throws SeatNotAvailableException {
+		return seatRepo.findById(id).orElseThrow(() -> new SeatNotAvailableException("Seat not found with id: " + id));
+	}
+
+	@Override
+	public List<Seat> getSeatsByFlight(int flightId) throws SeatNotAvailableException {
+		List<Seat> seats = seatRepo.findByFlightFlightId(flightId);
+		if (seats == null || seats.isEmpty()) {
+			throw new SeatNotAvailableException("No seats found for flight with id: " + flightId);
+		}
+		return seats;
+	}
+
+	@Override
+	public List<Seat> getSeatsByBookingStatus(boolean isBooked) throws SeatNotAvailableException {
+		List<Seat> seats = seatRepo.findByIsBooked(isBooked);
+		if (seats == null || seats.isEmpty()) {
+			throw new SeatNotAvailableException("No seats found with booking status: " + isBooked);
+		}
+		return seats;
+	}
+
+	@Override
+	public Seat addSeat(SeatDto seatDto) {
+		Seat seat = new Seat();
+		seat.setSeatNumber(seatDto.getSeatNumber());
+		seat.setBooked(seatDto.isBooked());
+		seat.setSeatClass(seatDto.getSeatClass());
+
+		Flight flight = flightRepo.findById(seatDto.getFlightId())
+	            .orElseThrow(() -> new RuntimeException("Flight not found with ID: " + seatDto.getFlightId()));
+	    seat.setFlight(flight);
+
+	    
+	    if (seatDto.getBookingId() > 0) {
+	        Booking booking = bookingRepo.findById(seatDto.getBookingId())
+	                .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + seatDto.getBookingId()));
+	        seat.setBooking(booking);
+	    }
+
+		return seatRepo.save(seat);
+	}
+
+	@Override
+	public List<Seat> getSeatsByFlightName(String flightName) throws SeatNotAvailableException {
+		List<Seat> seats = seatRepo.findByFlightFlightName(flightName);
+		if (seats == null || seats.isEmpty()) {
+			throw new SeatNotAvailableException("No seats found for flight with name: " + flightName);
+		}
+		return seats;
+	}
 }

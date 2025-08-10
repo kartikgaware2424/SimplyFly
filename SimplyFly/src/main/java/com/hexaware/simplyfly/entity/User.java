@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
@@ -15,22 +16,23 @@ import lombok.NoArgsConstructor;
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
     private String name;
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // roles are Passenger, FlightOwner and Admin
     private UserRole role;
 
     private String contactNumber;
     private String gender;
+    private int age;
     private String address;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "passenger")
     private List<Booking> bookings;
 
     @OneToMany(mappedBy = "owner")

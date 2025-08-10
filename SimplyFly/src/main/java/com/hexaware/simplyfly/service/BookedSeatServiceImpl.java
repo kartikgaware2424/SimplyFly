@@ -5,23 +5,56 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hexaware.simplyfly.dto.BookedSeatDto;
 import com.hexaware.simplyfly.entity.BookedSeat;
+import com.hexaware.simplyfly.entity.Booking;
+import com.hexaware.simplyfly.entity.Seat;
+import com.hexaware.simplyfly.entity.User;
 import com.hexaware.simplyfly.repository.BookedSeatRepository;
+import com.hexaware.simplyfly.repository.BookingRepository;
+import com.hexaware.simplyfly.repository.SeatRepository;
+import com.hexaware.simplyfly.repository.UserRepository;
 
 @Service
 public class BookedSeatServiceImpl implements BookedSeatService {
-    @Autowired
-    private BookedSeatRepository bookedSeatRepo;
 
-    public List<BookedSeat> getBookedSeatsByBooking(int bookingId) {
-        return bookedSeatRepo.findByBookingBookingId(bookingId);
-    }
+	@Autowired
+	private BookedSeatRepository bookedSeatRepo;
 
-    public List<BookedSeat> getBookedSeatsByPassenger(int passengerId) {
-        return bookedSeatRepo.findByPassengerUserId(passengerId);
-    }
+	@Autowired
+	private BookingRepository bookingRepo;
 
-    public BookedSeat addBookedSeat(BookedSeat bookedSeat) {
-        return bookedSeatRepo.save(bookedSeat);
-    }
+	@Autowired
+	private SeatRepository seatRepo;
+
+	@Autowired
+	private UserRepository userRepo;
+
+	@Override
+	public BookedSeat addBookedSeatFromDto(BookedSeatDto dto) {
+		Booking booking = bookingRepo.findById(dto.getBookingId()).orElse(null);
+				
+		Seat seat = seatRepo.findById(dto.getSeatId()).orElseThrow(() -> new RuntimeException("Seat not found"));
+
+		User passenger = userRepo.findById(dto.getPassengerId()).orElseThrow(() -> new RuntimeException("Passenger not found"));
+
+		BookedSeat bookedSeat = new BookedSeat();
+		bookedSeat.setBooking(booking);
+		bookedSeat.setSeat(seat);
+		bookedSeat.setPassenger(passenger);
+		bookedSeat.setPrice(dto.getPrice());
+
+		return bookedSeatRepo.save(bookedSeat);
+	}
+
+	@Override
+	public List<BookedSeat> getBookedSeatsByBooking(int bookingId) {
+		return bookedSeatRepo.findByBookingBookingId(bookingId);
+	}
+
+	@Override
+	public List<BookedSeat> getBookedSeatsByPassenger(int passengerId) {
+		return bookedSeatRepo.findByPassengerUserId(passengerId);
+	}
+
 }

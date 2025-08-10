@@ -17,7 +17,7 @@ public class Seat {
     private int seatId;
 
     private String seatNumber; // e.g 12A
-    private boolean isBooked;
+    private boolean isBooked; // True or False
     private String seatClass; // Economy, Business, First
 
 

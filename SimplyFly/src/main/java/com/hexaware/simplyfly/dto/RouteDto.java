@@ -1,31 +1,32 @@
 package com.hexaware.simplyfly.dto;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Entity
+
 public class RouteDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long routeId;
+	@NotBlank
+    @Size(max = 100)
+    private String origin;
 
-    private String origin;      // e.g., Mumbai
-    private String destination; // e.g., Delhi
+    @NotBlank
+    @Size(max = 100)
+    private String destination;
 
-    private double distanceInKm; //  Used to calculate the fare
+    @NotNull
+    @Positive
+    private Double distanceInKm;
 
-    private String travelDuration; //e.g 2h 15m
-
-    @OneToMany(mappedBy = "route")
-    private List<FlightDto> flights;
+    @NotBlank
+    @Pattern(regexp = "^[0-9]+h\\s[0-9]+m$", message = "Travel duration must be in format like '2h 15m'")
+    private String travelDuration;
 }

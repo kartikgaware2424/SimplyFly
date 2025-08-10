@@ -1,5 +1,6 @@
 package com.hexaware.simplyfly.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Flight {
 
 	private String baggageCheckIn; // e.g., 20kg
 	private String baggageCabin; // e.g., 7kg
-
+	private LocalDate departureDate; 
 	private LocalDateTime departureTime;
 	private LocalDateTime arrivalTime;
 

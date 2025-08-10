@@ -3,10 +3,11 @@ package com.hexaware.simplyfly.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.hexaware.simplyfly.dto.UserDto;
 import com.hexaware.simplyfly.entity.User;
 
 public interface UserService {
-	User addUser(User user);
+	
 
 	User getUserById(int id);
 
@@ -14,6 +15,8 @@ public interface UserService {
 
 	List<User> getUsersByRole(String role);
 
-	Optional<User> getUserByEmail(String email);
+	List<User> getUserByEmail(String email);
+
+	User addUser(UserDto userDto);
 
 }

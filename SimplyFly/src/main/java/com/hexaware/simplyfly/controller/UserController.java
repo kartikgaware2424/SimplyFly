@@ -1,0 +1,51 @@
+package com.hexaware.simplyfly.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hexaware.simplyfly.dto.UserDto;
+import com.hexaware.simplyfly.entity.User;
+import com.hexaware.simplyfly.service.UserService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+	@Autowired
+	private UserService userService;
+
+	@PostMapping
+	public User addUser(@Valid @RequestBody UserDto userDto) {
+		return userService.addUser(userDto);
+	}
+
+	@GetMapping("/{id}")
+	public User getUserById(@PathVariable int id) {
+		return userService.getUserById(id);
+	}
+
+	@GetMapping
+	public List<User> getAllUsers() {
+		return userService.getAllUsers();
+	}
+
+	@GetMapping("/role/{role}")
+	public List<User> getUsersByRole(@PathVariable String role) {
+		return userService.getUsersByRole(role);
+	}
+
+	@GetMapping("/email/{email}")
+	public List<User> getUserByEmail(@PathVariable String email) {
+		return userService.getUserByEmail(email);
+	}
+}

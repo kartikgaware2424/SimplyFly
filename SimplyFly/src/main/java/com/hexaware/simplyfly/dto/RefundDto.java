@@ -3,44 +3,50 @@ package com.hexaware.simplyfly.dto;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Entity
+
 public class RefundDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long refundId;
+	  @NotNull
+	    @Positive
+	    private Double amount;
 
-    private double amount;
+	    @NotNull
+	    @PastOrPresent
+	    private LocalDateTime refundDate;
 
-    private LocalDateTime refundDate = LocalDateTime.now();
-    
-    private String refundMethod; // e.g., UPI, Bank Transfer
-    private String transactionId; // To track the payment gateway and  refund
-    private String reason; // Flight cancelled,Will get it from User 
+	    @NotBlank
+	    @Pattern(regexp = "UPI|BANK_TRANSFER", message = "Refund method must be UPI or BANK_TRANSFER")
+	    private String refundMethod;
 
+	    @NotBlank
+	    @Size(max = 50)
+	    private String transactionId;
 
-    @Enumerated(EnumType.STRING)
-    private RefundStatusDto status; //  PENDING, COMPLETED, FAILED
+	    @NotBlank
+	    @Size(max = 200)
+	    private String reason;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserDto user; // The passenger who initiated the refund
+	    @NotNull
+	    @Pattern(regexp = "PENDING|COMPLETED|FAILED", message = "Status must be PENDING, COMPLETED, or FAILED")
+	    private String status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id", nullable = false, unique = true)
-    private BookingDto booking;
+	    @NotNull
+	    @Min(1)
+	    private Integer userId;
+
+	    @NotNull
+	    @Min(1)
+	    private Integer bookingId;
 }

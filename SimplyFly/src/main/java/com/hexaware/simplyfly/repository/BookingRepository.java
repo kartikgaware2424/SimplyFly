@@ -9,7 +9,8 @@ import com.hexaware.simplyfly.entity.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-	List<Booking> findByUserUserId(int userId);
+	List<Booking> findByPassengerUserId(int userId);
+
 
 	List<Booking> findByFlightFlightId(int flightId);
 

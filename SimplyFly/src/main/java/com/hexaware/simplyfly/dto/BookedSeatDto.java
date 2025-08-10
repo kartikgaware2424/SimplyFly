@@ -1,31 +1,33 @@
 package com.hexaware.simplyfly.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
-@Entity
+
 public class BookedSeatDto {
-    @Id @GeneratedValue
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private BookingDto booking;
-
-    @OneToOne
-    @JoinColumn(name = "seat_id")
-    private SeatDto seat;
+	@NotNull
+    @Min(1)
     
-    @ManyToOne
-    @JoinColumn(name = "passenger_id", nullable = false)
-    private UserDto passenger; // Passenger who have booked the seat
+    private int bookingId;
 
+    @NotNull
+    @Min(1)
+   
+    private int seatId;
+
+    @NotNull
+    @Min(1)
+   
+    private int passengerId;
+
+    @Positive
+    @Max(1000000) // Example: max price is 1 million
     private double price;
 }

@@ -1,51 +1,65 @@
 package com.hexaware.simplyfly.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 public class FlightDto {
+	  @NotBlank
+	    @Size(max = 100)
+	    private String flightName;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long flightId;
+	    @NotBlank
+	    @Size(max = 20)
+	    private String flightNumber;
 
-	private String flightName;
+	    @NotNull
+	    @Min(1)
+	    @Max(1000)
+	    private Integer totalSeats;
 
-	@Column(unique = true, nullable = false)
-	private String flightNumber;
+	    @NotNull
+	    @Positive
+	    @Max(100000)
+	    private Double fare;
 
-	private int totalSeats;
-	private double fare;
+	    @NotBlank
+	    @Size(max = 20)
+	    private String baggageCheckIn;
 
-	private String baggageCheckIn; // e.g., 20kg
-	private String baggageCabin; // e.g., 7kg
+	    @NotBlank
+	    @Size(max = 20)
+	    private String baggageCabin;
 
-	private LocalDateTime departureTime;
-	private LocalDateTime arrivalTime;
+	    @NotNull
+	    @FutureOrPresent
+	    private LocalDate departureDate;
 
-	@ManyToOne
-	@JoinColumn(name = "route_id", nullable = false)
-	private RouteDto route;
+	    @NotNull
+	    @FutureOrPresent
+	    private LocalDateTime departureTime;
 
-	@ManyToOne
-	@JoinColumn(name = "owner_id", nullable = false)
-	private UserDto owner; // Flight owner
+	    @NotNull
+	    @FutureOrPresent
+	    private LocalDateTime arrivalTime;
 
-	@OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
-	private List<SeatDto> seats;
+	    @NotNull
+	    @Min(1)
+	    private Integer routeId;
+
+	    @NotNull
+	    @Min(1)
+	    private Integer ownerId;
 }

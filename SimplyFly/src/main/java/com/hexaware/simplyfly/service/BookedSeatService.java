@@ -2,6 +2,7 @@ package com.hexaware.simplyfly.service;
 
 import java.util.List;
 
+import com.hexaware.simplyfly.dto.BookedSeatDto;
 import com.hexaware.simplyfly.entity.BookedSeat;
 
 public interface BookedSeatService {
@@ -9,5 +10,5 @@ public interface BookedSeatService {
 
 	List<BookedSeat> getBookedSeatsByPassenger(int passengerId);
 
-	BookedSeat addBookedSeat(BookedSeat bookedSeat);
+	BookedSeat addBookedSeatFromDto(BookedSeatDto dto);
 }

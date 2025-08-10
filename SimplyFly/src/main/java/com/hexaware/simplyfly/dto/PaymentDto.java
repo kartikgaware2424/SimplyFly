@@ -3,38 +3,41 @@ package com.hexaware.simplyfly.dto;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
-@Entity
+
 public class PaymentDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+	@NotNull
+    @Positive
+    private Double amount;
 
-    private double amount;
+    @NotNull
+    @PastOrPresent
+    private LocalDateTime paymentDate;
 
-    private LocalDateTime paymentDate = LocalDateTime.now();
+    @NotNull
+    @Pattern(regexp = "CARD|UPI|NETBANKING", message = "Payment method must be CARD, UPI, or NETBANKING")
+    private String paymentMethod;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethodDto paymentMethod; // CARD, UPI, NETBANKING
-
+    @NotBlank
+    @Size(max = 50)
     private String transactionId;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentStatusDto status; // SUCCESS, FAILED
+    @NotNull
+    @Pattern(regexp = "SUCCESS|FAILED", message = "Status must be SUCCESS or FAILED")
+    private String status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id", nullable = false, unique = true)
-    private BookingDto booking;
+    @NotNull
+    @Min(1)
+    private Integer bookingId;
 }

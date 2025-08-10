@@ -2,16 +2,18 @@ package com.hexaware.simplyfly.service;
 
 import java.util.List;
 
+import com.hexaware.simplyfly.dto.BookingDto;
 import com.hexaware.simplyfly.entity.Booking;
+import com.hexaware.simplyfly.exception.BookingNotFoundException;
 
 public interface BookingService {
-	Booking getBookingById(int id);
+	Booking getBookingById(int id) throws BookingNotFoundException;
 
-	List<Booking> getBookingsByUser(int userId);
+	List<Booking> getBookingsByUser(int userId) throws BookingNotFoundException;
 
-	List<Booking> getBookingsByFlight(int flightId);
+	List<Booking> getBookingsByFlight(int flightId) throws BookingNotFoundException;
 
-	List<Booking> getBookingsByStatus(String status);
+	List<Booking> getBookingsByStatus(String status) throws BookingNotFoundException;
 
-	Booking addBooking(Booking booking);
+	Booking addBooking(BookingDto bookingDto) throws BookingNotFoundException;
 }

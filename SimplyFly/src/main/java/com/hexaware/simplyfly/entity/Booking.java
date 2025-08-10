@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Booking {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookingId;
 
@@ -32,7 +31,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Passenger who made the booking
+    private User passenger; // Passenger who made the booking
 
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false)

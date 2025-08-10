@@ -1,18 +1,27 @@
 package com.hexaware.simplyfly.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Data
+@NoArgsConstructor
 public class DocumentDto {
 
-    @Id
-    @GeneratedValue
-    private Long documentId;
+	 @NotBlank
+	    @Size(max = 50)
+	    private String documentType;
 
-    private String documentType; // e.g., "AADHAAR", "PASSPORT"
-    private String documentNumber;
+	    @NotBlank
+	    @Size(max = 100)
+	    private String documentNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserDto user;
+	    @NotNull
+	    @Min(1)
+	    @Max(Integer.MAX_VALUE)
+	    private int userId;
 }

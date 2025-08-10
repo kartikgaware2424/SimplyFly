@@ -3,47 +3,43 @@ package com.hexaware.simplyfly.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 public class BookingDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+	@NotNull
+	@FutureOrPresent
+	private LocalDateTime bookingDate;
 
-    private LocalDateTime bookingDate;
+	@Positive
 
-    private double totalAmount;
+	private double totalAmount;
 
-    private String status; // "CONFIRMED", "CANCELLED", etc.
+	@NotNull
+	@Pattern(regexp = "CONFIRMED|CANCELLED|PENDING", message = "Status must be CONFIRMED, CANCELLED, or PENDING")
+	private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserDto user; // Passenger who made the booking
+	@NotNull
+	@Min(1)
 
-    @ManyToOne
-    @JoinColumn(name = "flight_id", nullable = false)
-    private FlightDto flight;
+	private int passengerId;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private List<SeatDto> bookedSeats;
+	@NotNull
+	@Min(1)
 
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
-    private PaymentDto payment;
+	private int flightId;
 
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
-    private RefundDto refund;
+	private List<Integer> bookedSeatIds;
+
+	private Integer paymentId;
+
+	private Integer refundId;
 }

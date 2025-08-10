@@ -2,14 +2,17 @@ package com.hexaware.simplyfly.service;
 
 import java.util.List;
 
+import com.hexaware.simplyfly.dto.RefundDto;
 import com.hexaware.simplyfly.entity.Refund;
+import com.hexaware.simplyfly.exception.RefundNotFoundException;
 
 public interface RefundService {
-	Refund getRefundById(int id);
+	Refund addRefund(RefundDto refundDto);
 
-	List<Refund> getRefundsByUser(int userId);
+	Refund getRefundById(int id) throws RefundNotFoundException;
 
-	Refund getRefundByBooking(int bookingId);
+	List<Refund> getRefundsByUser(int userId) throws RefundNotFoundException;
 
-	Refund addRefund(Refund refund);
+	Refund getRefundByBooking(int bookingId) throws RefundNotFoundException;
+
 }

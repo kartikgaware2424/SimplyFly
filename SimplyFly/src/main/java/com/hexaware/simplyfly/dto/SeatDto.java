@@ -1,31 +1,33 @@
 package com.hexaware.simplyfly.dto;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
-@Entity
+
 public class SeatDto {
 
-    @Id
-    @GeneratedValue
-    private Long seatId;
+	@NotBlank
+	@Pattern(regexp = "^[0-9]{1,2}[A-Z]$", message = "Seat number must be in format like '12A'")
+	private String seatNumber;
 
-    private String seatNumber; // e.g 12A
-    private boolean isBooked;
-    private String seatClass; // Economy, Business, First
+	@NotNull(message = "Booking status must be provided")
+	private boolean booked;
 
+	@NotBlank
+	@Pattern(regexp = "Economy|Business|First", message = "Seat class must be Economy, Business, or First")
+	private String seatClass;
 
-    @ManyToOne
-    @JoinColumn(name = "flight_id")
-    private FlightDto flight;
+	@NotNull
+	@Min(1)
+	private int flightId;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private BookingDto booking;
+	@Min(1)
+	private int bookingId; // Optional because a seat might not be booked yet
 }
