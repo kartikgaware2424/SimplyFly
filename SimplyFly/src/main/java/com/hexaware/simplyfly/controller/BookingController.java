@@ -21,31 +21,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/bookings")
 public class BookingController {
 
-    @Autowired
-    private BookingService bookingService;
+	@Autowired
+	private BookingService bookingService;
 
-    @GetMapping("/{id}")
-    public Booking getBookingById(@PathVariable int id) throws BookingNotFoundException {
-        return bookingService.getBookingById(id);
-    }
+	@PostMapping
+	public Booking addBooking(@Valid @RequestBody BookingDto bookingDto) throws BookingNotFoundException {
+		return bookingService.addBooking(bookingDto);
+	}
 
-    @GetMapping("/user/{userId}")
-    public List<Booking> getBookingsByUser(@PathVariable int userId) throws BookingNotFoundException {
-        return bookingService.getBookingsByUser(userId);
-    }
+	@GetMapping("/{id}")
+	public Booking getBookingById(@PathVariable int id) throws BookingNotFoundException {
+		return bookingService.getBookingById(id);
+	}
 
-    @GetMapping("/flight/{flightId}")
-    public List<Booking> getBookingsByFlight(@PathVariable int flightId) throws BookingNotFoundException {
-        return bookingService.getBookingsByFlight(flightId);
-    }
+	@GetMapping("/user/{userId}")
+	public List<Booking> getBookingsByUser(@PathVariable int userId) throws BookingNotFoundException {
+		return bookingService.getBookingsByUser(userId);
+	}
 
-    @GetMapping("/status/{status}")
-    public List<Booking> getBookingsByStatus(@PathVariable String status) throws BookingNotFoundException {
-        return bookingService.getBookingsByStatus(status);
-    }
+	@GetMapping("/flight/{flightId}")
+	public List<Booking> getBookingsByFlight(@PathVariable int flightId) throws BookingNotFoundException {
+		return bookingService.getBookingsByFlight(flightId);
+	}
 
-    @PostMapping
-    public Booking addBooking(@Valid @RequestBody BookingDto bookingDto) throws BookingNotFoundException {
-        return bookingService.addBooking(bookingDto);
-    }
+	@GetMapping("/status/{status}")
+	public List<Booking> getBookingsByStatus(@PathVariable String status) throws BookingNotFoundException {
+		return bookingService.getBookingsByStatus(status);
+	}
+
 }

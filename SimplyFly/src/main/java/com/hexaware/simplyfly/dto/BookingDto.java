@@ -20,7 +20,6 @@ public class BookingDto {
 	private LocalDateTime bookingDate;
 
 	@Positive
-
 	private double totalAmount;
 
 	@NotNull
@@ -29,13 +28,11 @@ public class BookingDto {
 
 	@NotNull
 	@Min(1)
-
 	private int passengerId;
 
 	@NotNull
 	@Min(1)
-
-	private int flightId;
+    private int flightId;
 
 	private List<Integer> bookedSeatIds;
 

@@ -1,10 +1,15 @@
 package com.hexaware.simplyfly.exception;
 
+
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(FlightNotFoundException.class)
@@ -35,6 +40,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(RefundNotFoundException.class)
 	@ResponseStatus(reason = "Refund not found for the given booking", code = HttpStatus.NOT_FOUND)
 	public void handleRefundNotFound() {
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(reason = "Input validation failed", code = HttpStatus.BAD_REQUEST)
+	public void handleValidations() {
+
+		log.error("validation failed");
+
 	}
 
 }

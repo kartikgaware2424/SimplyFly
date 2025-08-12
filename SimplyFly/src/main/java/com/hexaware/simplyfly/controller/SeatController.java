@@ -21,31 +21,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/seats")
 public class SeatController {
 
-    @Autowired
-    private SeatService seatService;
+	@Autowired
+	private SeatService seatService;
 
-    @GetMapping("/{id}")
-    public Seat getSeatById(@PathVariable int id) throws SeatNotAvailableException {
-        return seatService.getSeatById(id);
-    }
+	@PostMapping
+	public Seat addSeat(@Valid @RequestBody SeatDto seatDto) {
+		return seatService.addSeat(seatDto);
+	}
 
-    @GetMapping("/flight/{flightId}")
-    public List<Seat> getSeatsByFlight(@PathVariable int flightId) throws SeatNotAvailableException {
-        return seatService.getSeatsByFlight(flightId);
-    }
+	@GetMapping("/{id}")
+	public Seat getSeatById(@PathVariable int id) throws SeatNotAvailableException {
+		return seatService.getSeatById(id);
+	}
 
-    @GetMapping("/status/{isBooked}")
-    public List<Seat> getSeatsByBookingStatus(@PathVariable boolean isBooked) throws SeatNotAvailableException {
-        return seatService.getSeatsByBookingStatus(isBooked);
-    }
+	@GetMapping("/flight/{flightId}")
+	public List<Seat> getSeatsByFlight(@PathVariable int flightId) throws SeatNotAvailableException {
+		return seatService.getSeatsByFlight(flightId);
+	}
 
-    @GetMapping("/flight/name/{flightName}")
-    public List<Seat> getSeatsByFlightName(@PathVariable String flightName) throws SeatNotAvailableException {
-        return seatService.getSeatsByFlightName(flightName);
-    }
+	@GetMapping("/status/{isBooked}")
+	public List<Seat> getSeatsByBookingStatus(@PathVariable boolean isBooked) throws SeatNotAvailableException {
+		return seatService.getSeatsByBookingStatus(isBooked);
+	}
 
-    @PostMapping
-    public Seat addSeat(@Valid @RequestBody SeatDto seatDto) {
-        return seatService.addSeat(seatDto);
-    }
+	@GetMapping("/flight/name/{flightName}")
+	public List<Seat> getSeatsByFlightName(@PathVariable String flightName) throws SeatNotAvailableException {
+		return seatService.getSeatsByFlightName(flightName);
+	}
+
 }

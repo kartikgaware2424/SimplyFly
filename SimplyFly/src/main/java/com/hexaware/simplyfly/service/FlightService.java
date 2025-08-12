@@ -14,8 +14,12 @@ public interface FlightService {
 
 	List<Flight> getFlightsByOwner(int ownerId) throws FlightNotFoundException;
 
-	 Flight addFlight(FlightDto flightDto) throws FlightNotFoundException;
+	Flight addFlight(FlightDto flightDto) throws FlightNotFoundException;
 
 	List<Flight> searchFlightsByDate(String origin, String destination, LocalDate departureDate)
 			throws FlightNotFoundException;
+
+	Flight updateFlight(int id, FlightDto flightDto) throws FlightNotFoundException;
+
+	String deleteFlight(int id) throws FlightNotFoundException;
 }
