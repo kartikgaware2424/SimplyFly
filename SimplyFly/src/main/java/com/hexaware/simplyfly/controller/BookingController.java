@@ -30,17 +30,17 @@ public class BookingController {
 		return bookingService.addBooking(bookingDto);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/getById/{id}")
 	public Booking getBookingById(@PathVariable int id) throws BookingNotFoundException {
 		return bookingService.getBookingById(id);
 	}
 
-	@GetMapping("/user/{userId}")
+	@GetMapping("/getByUser/{userId}")
 	public List<Booking> getBookingsByUser(@PathVariable int userId) throws BookingNotFoundException {
 		return bookingService.getBookingsByUser(userId);
 	}
 
-	@GetMapping("/flight/{flightId}")
+	@GetMapping("/getByflight/{flightId}")
 	public List<Booking> getBookingsByFlight(@PathVariable int flightId) throws BookingNotFoundException {
 		return bookingService.getBookingsByFlight(flightId);
 	}

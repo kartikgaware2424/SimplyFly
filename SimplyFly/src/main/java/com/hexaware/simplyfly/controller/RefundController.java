@@ -26,21 +26,21 @@ public class RefundController {
 	@Autowired
 	private RefundService refundService;
 
-	// Add new refund
+
 	@PostMapping("/add")
 	public Refund addRefund(@Valid @RequestBody RefundDto refundDto)
 			throws UserNotFoundException, BookingNotFoundException {
 		return refundService.addRefund(refundDto);
 	}
 
-	// Get refund by ID
-	@GetMapping("/{id}")
+
+	@GetMapping("/getById/{id}")
 	public Refund getRefundById(@PathVariable int id) throws RefundNotFoundException {
 		return refundService.getRefundById(id);
 	}
 
-	// Get refunds for a specific user
-	@GetMapping("/user/{userId}")
+	
+	@GetMapping("/getByuser/{userId}")
 	public List<Refund> getRefundsByUser(@PathVariable int userId) throws RefundNotFoundException {
 		return refundService.getRefundsByUser(userId);
 	}

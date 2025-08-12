@@ -10,6 +10,6 @@ import com.hexaware.simplyfly.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    List<User> findByEmail(String email); //find user by email
+	Optional<User> findByEmail(String email);//find user by email
     List<User> findByRole(String role); // for fetching all Passenger, Owners, etc.
 }

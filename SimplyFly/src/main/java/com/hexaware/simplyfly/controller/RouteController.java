@@ -31,19 +31,19 @@ public class RouteController {
 		return routeService.addRoute(routeDto);
 	}
 
-	@GetMapping("/{origin}/{destination}")
+	@GetMapping("/getByOriginDestination/{origin}/{destination}")
 	public List<Route> searchRoutes(@PathVariable String origin, @PathVariable String destination) {
 		return routeService.searchRoutes(origin, destination);
 	}
 
-	// Update Route
-	@PutMapping("/{id}")
+	
+	@PutMapping("/updateById/{id}")
 	public Route updateRoute(@PathVariable int id,@Valid @RequestBody RouteDto updatedRoute) throws RouteNotFoundException {
 		return routeService.updateRoute(id, updatedRoute);
 	}
 
-	// Delete Route
-	@DeleteMapping("/{id}")
+	
+	@DeleteMapping("/deleteById/{id}")
 	public String deleteRoute(@PathVariable int id) throws RouteNotFoundException {
 		routeService.deleteRoute(id);
 		return "Route deleted successfully with ID: " + id;

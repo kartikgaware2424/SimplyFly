@@ -36,17 +36,17 @@ public class SeatController {
 		return seatService.getSeatById(id);
 	}
 
-	@GetMapping("/flight/{flightId}")
+	@GetMapping("/getflightId/{flightId}")
 	public List<Seat> getSeatsByFlight(@PathVariable int flightId) throws SeatNotAvailableException {
 		return seatService.getSeatsByFlight(flightId);
 	}
 
-	@GetMapping("/status/{isBooked}")
+	@GetMapping("/getByStatus/{isBooked}")
 	public List<Seat> getSeatsByBookingStatus(@PathVariable boolean isBooked) throws SeatNotAvailableException {
 		return seatService.getSeatsByBookingStatus(isBooked);
 	}
 
-	@GetMapping("/flight/name/{flightName}")
+	@GetMapping("/getByFlight/name/{flightName}")
 	public List<Seat> getSeatsByFlightName(@PathVariable String flightName) throws SeatNotAvailableException {
 		return seatService.getSeatsByFlightName(flightName);
 	}

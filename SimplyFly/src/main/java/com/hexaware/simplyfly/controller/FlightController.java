@@ -28,39 +28,39 @@ public class FlightController {
 	@Autowired
 	private FlightService flightService;
 
-	// Add flight
+	
 	@PostMapping("/add")
 	public Flight addFlight(@RequestBody @Valid FlightDto flightDto) throws FlightNotFoundException {
 		return flightService.addFlight(flightDto);
 	}
 
-	// Get flight by ID
-	@GetMapping("/{id}")
+	
+	@GetMapping("getById/{id}")
 	public Flight getFlightById(@PathVariable int id) throws FlightNotFoundException {
 		return flightService.getFlightById(id);
 	}
 
-	// Search flights by origin & destination
+	
 	@GetMapping("/search/{origin}/{destination}")
 	public List<Flight> searchFlights(@PathVariable String origin, @PathVariable String destination)
 			throws FlightNotFoundException {
 		return flightService.searchFlights(origin, destination);
 	}
-	// Update flight
-    @PutMapping("/update/{id}")
+	
+    @PutMapping("/updateById/{id}")
     public Flight updateFlight(@PathVariable int id, @RequestBody @Valid FlightDto flightDto)
             throws FlightNotFoundException {
         return flightService.updateFlight(id, flightDto);
     }
 
-    // Delete flight
-    @DeleteMapping("/delete/{id}")
+    
+    @DeleteMapping("/deleteById/{id}")
     public String deleteFlight(@PathVariable int id) throws FlightNotFoundException {
         flightService.deleteFlight(id);
         return "Flight with ID " + id + " deleted successfully.";
     }
 
-	// Search flights by origin, destination & date
+	
 	@GetMapping("/search/{origin}/{destination}/{departureDate}")
 	public List<Flight> searchFlightsByDate(@PathVariable String origin, @PathVariable String destination,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate)
@@ -68,8 +68,8 @@ public class FlightController {
 		return flightService.searchFlightsByDate(origin, destination, departureDate);
 	}
 
-	// Get flights by owner
-	@GetMapping("/owner/{ownerId}")
+	
+	@GetMapping("/getByOwner/{ownerId}")
 	public List<Flight> getFlightsByOwner(@PathVariable int ownerId) throws FlightNotFoundException {
 		return flightService.getFlightsByOwner(ownerId);
 	}

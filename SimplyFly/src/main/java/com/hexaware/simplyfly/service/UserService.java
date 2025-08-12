@@ -16,7 +16,7 @@ public interface UserService {
 
 	List<User> getUsersByRole(String role);
 
-	List<User> getUserByEmail(String email);
+	Optional<User> getUserByEmail(String email);
 	String deleteUser(int id);
 
 }

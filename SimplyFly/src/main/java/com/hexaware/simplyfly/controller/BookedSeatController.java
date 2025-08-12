@@ -25,12 +25,12 @@ public class BookedSeatController {
     
    
 
-    @GetMapping("/booking/{bookingId}")
+    @GetMapping("/getByBookings/{bookingId}")
     public List<BookedSeat> getBookedSeatsByBooking(@PathVariable int bookingId) {
         return bookedSeatService.getBookedSeatsByBooking(bookingId);
     }
 
-    @GetMapping("/passenger/{passengerId}")
+    @GetMapping("/getBypassenger/{passengerId}")
     public List<BookedSeat> getBookedSeatsByPassenger(@PathVariable int passengerId) {
         return bookedSeatService.getBookedSeatsByPassenger(passengerId);
     }

@@ -30,17 +30,17 @@ public class PaymentController {
         return paymentService.addPayment(paymentDto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public Payment getPaymentById(@PathVariable int id) {
         return paymentService.getPaymentById(id);
     }
 
-    @GetMapping("/status/{status}")
+    @GetMapping("/getBystatus/{status}")
     public List<Payment> getPaymentsByStatus(@PathVariable String status) {
         return paymentService.getPaymentsByStatus(status);
     }
 
-    @GetMapping("/booking/{bookingId}")
+    @GetMapping("/getBybooking/{bookingId}")
     public Payment getPaymentByBooking(@PathVariable int bookingId) throws PaymentFailedException {
         return paymentService.getPaymentByBooking(bookingId);
     }
