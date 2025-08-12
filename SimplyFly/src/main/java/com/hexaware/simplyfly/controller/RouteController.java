@@ -20,13 +20,13 @@ import com.hexaware.simplyfly.service.RouteService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/routes")
+@RequestMapping("/routes")
 public class RouteController {
 
 	@Autowired
 	private RouteService routeService;
 
-	@PostMapping
+	@PostMapping("/add")
 	public Route addRoute(@Valid @RequestBody RouteDto routeDto) {
 		return routeService.addRoute(routeDto);
 	}

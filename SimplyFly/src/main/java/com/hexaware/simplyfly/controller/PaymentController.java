@@ -25,7 +25,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
     
-    @PostMapping
+    @PostMapping("/add")
     public Payment addPayment(@Valid @RequestBody PaymentDto paymentDto) throws BookingNotFoundException {
         return paymentService.addPayment(paymentDto);
     }

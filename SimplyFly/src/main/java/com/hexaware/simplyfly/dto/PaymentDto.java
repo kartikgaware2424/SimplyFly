@@ -17,27 +17,26 @@ import lombok.NoArgsConstructor;
 
 public class PaymentDto {
 
-	@NotNull
+	
     @Positive
     private Double amount;
 
-    @NotNull
+    
     @PastOrPresent
     private LocalDateTime paymentDate;
 
-    @NotNull
+    
     @Pattern(regexp = "CARD|UPI|NETBANKING", message = "Payment method must be CARD, UPI, or NETBANKING")
     private String paymentMethod;
 
-    @NotBlank
+   
     @Size(max = 50)
     private String transactionId;
 
-    @NotNull
+   
     @Pattern(regexp = "SUCCESS|FAILED", message = "Status must be SUCCESS or FAILED")
     private String status;
 
-    @NotNull
-    @Min(1)
+   
     private Integer bookingId;
 }

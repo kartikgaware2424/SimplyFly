@@ -2,6 +2,12 @@ package com.hexaware.simplyfly.exception;
 
 
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,11 +49,14 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(reason = "Input validation failed", code = HttpStatus.BAD_REQUEST)
-	public void handleValidations() {
-
-		log.error("validation failed");
-
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public Map<String, String> handleValidations(MethodArgumentNotValidException e) {
+	    return e.getBindingResult().getFieldErrors().stream()
+	            .collect(Collectors.toMap(
+	                    err -> err.getField(),
+	                    err -> err.getDefaultMessage(),
+	                    (msg1, msg2) -> msg1
+	            ));
 	}
 
 }

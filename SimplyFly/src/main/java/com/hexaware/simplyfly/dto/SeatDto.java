@@ -13,21 +13,20 @@ import lombok.NoArgsConstructor;
 
 public class SeatDto {
 
-	@NotBlank
+	
 	@Pattern(regexp = "^[0-9]{1,2}[A-Z]$", message = "Seat number must be in format like '12A'")
 	private String seatNumber;
 
 	@NotNull(message = "Booking status must be provided")
 	private boolean booked;
 
-	@NotBlank
+	
 	@Pattern(regexp = "Economy|Business|First", message = "Seat class must be Economy, Business, or First")
 	private String seatClass;
 
-	@NotNull
-	@Min(1)
+	
 	private int flightId;
 
-	@Min(1)
+
 	private int bookingId; // Optional because a seat might not be booked yet
 }

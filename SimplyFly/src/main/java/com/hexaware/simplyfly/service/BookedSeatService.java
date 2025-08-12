@@ -10,5 +10,5 @@ public interface BookedSeatService {
 
 	List<BookedSeat> getBookedSeatsByPassenger(int passengerId);
 
-	BookedSeat addBookedSeatFromDto(BookedSeatDto dto);
+	
 }

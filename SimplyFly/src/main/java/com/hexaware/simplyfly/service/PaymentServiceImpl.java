@@ -22,6 +22,22 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private BookingRepository bookingRepo;
+	
+	@Override
+	public Payment addPayment(PaymentDto dto) throws BookingNotFoundException {
+		Booking booking = bookingRepo.findById(dto.getBookingId())
+				.orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + dto.getBookingId()));
+
+		Payment payment = new Payment();
+		payment.setAmount(dto.getAmount());
+		payment.setPaymentDate(dto.getPaymentDate());
+		payment.setPaymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod().toUpperCase()));
+		payment.setTransactionId(dto.getTransactionId());
+		payment.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
+		payment.setBooking(booking);
+
+		return paymentRepo.save(payment);
+	}
 
 	@Override
 	public Payment getPaymentById(int id) {
@@ -42,19 +58,5 @@ public class PaymentServiceImpl implements PaymentService {
 		return payment;
 	}
 
-	@Override
-	public Payment addPayment(PaymentDto dto) throws BookingNotFoundException {
-		Booking booking = bookingRepo.findById(dto.getBookingId())
-				.orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + dto.getBookingId()));
-
-		Payment payment = new Payment();
-		payment.setAmount(dto.getAmount());
-		payment.setPaymentDate(dto.getPaymentDate());
-		payment.setPaymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod().toUpperCase()));
-		payment.setTransactionId(dto.getTransactionId());
-		payment.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
-		payment.setBooking(booking);
-
-		return paymentRepo.save(payment);
-	}
+	
 }

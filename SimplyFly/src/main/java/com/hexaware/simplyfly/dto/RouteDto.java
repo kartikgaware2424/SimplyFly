@@ -14,19 +14,18 @@ import lombok.NoArgsConstructor;
 
 public class RouteDto {
 
-	@NotBlank
+
     @Size(max = 100)
     private String origin;
 
-    @NotBlank
+   
     @Size(max = 100)
     private String destination;
 
-    @NotNull
     @Positive
     private Double distanceInKm;
 
-    @NotBlank
+  
     @Pattern(regexp = "^[0-9]+h\\s[0-9]+m$", message = "Travel duration must be in format like '2h 15m'")
     private String travelDuration;
 }

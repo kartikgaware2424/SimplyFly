@@ -24,27 +24,27 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping
+	@PostMapping("/add")
 	public User addUser(@Valid @RequestBody UserDto userDto) {
 		return userService.addUser(userDto);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("getUserById/{id}")
 	public User getUserById(@PathVariable int id) {
 		return userService.getUserById(id);
 	}
 
-	@GetMapping
+	@GetMapping("/getAll")
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 
-	@GetMapping("/role/{role}")
+	@GetMapping("/getUserByRole/{role}")
 	public List<User> getUsersByRole(@PathVariable String role) {
 		return userService.getUsersByRole(role);
 	}
 
-	@GetMapping("/email/{email}")
+	@GetMapping("/getUserByEmail/{email}")
 	public List<User> getUserByEmail(@PathVariable String email) {
 		return userService.getUserByEmail(email);
 	}

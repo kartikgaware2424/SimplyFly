@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.hexaware.simplyfly.dto.SeatDto;
 import com.hexaware.simplyfly.entity.Seat;
+import com.hexaware.simplyfly.exception.BookingNotFoundException;
+import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 
 public interface SeatService {
@@ -13,7 +15,7 @@ public interface SeatService {
 
 	List<Seat> getSeatsByBookingStatus(boolean isBooked) throws SeatNotAvailableException;
 
-	Seat addSeat(SeatDto seatDto);
+	Seat addSeat(SeatDto seatDto) throws FlightNotFoundException, BookingNotFoundException;
 
 	List<Seat> getSeatsByFlightName(String flightName) throws SeatNotAvailableException;
 }

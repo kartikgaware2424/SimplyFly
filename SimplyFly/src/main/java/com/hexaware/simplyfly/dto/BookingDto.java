@@ -15,22 +15,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookingDto {
 
-	@NotNull
+
 	@FutureOrPresent
 	private LocalDateTime bookingDate;
 
 	@Positive
 	private double totalAmount;
 
-	@NotNull
+	
 	@Pattern(regexp = "CONFIRMED|CANCELLED|PENDING", message = "Status must be CONFIRMED, CANCELLED, or PENDING")
 	private String status;
 
-	@NotNull
+	
 	@Min(1)
 	private int passengerId;
 
-	@NotNull
+	
 	@Min(1)
     private int flightId;
 

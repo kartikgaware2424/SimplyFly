@@ -30,22 +30,7 @@ public class BookedSeatServiceImpl implements BookedSeatService {
 	@Autowired
 	private UserRepository userRepo;
 
-	@Override
-	public BookedSeat addBookedSeatFromDto(BookedSeatDto dto) {
-		Booking booking = bookingRepo.findById(dto.getBookingId()).orElse(null);
-				
-		Seat seat = seatRepo.findById(dto.getSeatId()).orElseThrow(() -> new RuntimeException("Seat not found"));
-
-		User passenger = userRepo.findById(dto.getPassengerId()).orElseThrow(() -> new RuntimeException("Passenger not found"));
-
-		BookedSeat bookedSeat = new BookedSeat();
-		bookedSeat.setBooking(booking);
-		bookedSeat.setSeat(seat);
-		bookedSeat.setPassenger(passenger);
-		bookedSeat.setPrice(dto.getPrice());
-
-		return bookedSeatRepo.save(bookedSeat);
-	}
+	
 
 	@Override
 	public List<BookedSeat> getBookedSeatsByBooking(int bookingId) {

@@ -37,10 +37,10 @@ public class Refund {
     private RefundStatus status; //  PENDING, COMPLETED, FAILED
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user; // The passenger who initiated the refund
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id", nullable = false, unique = true)
+    @JoinColumn(name = "booking_id", unique = true)
     private Booking booking;
 }

@@ -6,24 +6,75 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.simplyfly.dto.BookingDto;
+import com.hexaware.simplyfly.entity.BookedSeat;
 import com.hexaware.simplyfly.entity.Booking;
 import com.hexaware.simplyfly.entity.Flight;
+import com.hexaware.simplyfly.entity.Seat;
 import com.hexaware.simplyfly.entity.User;
 import com.hexaware.simplyfly.exception.BookingNotFoundException;
+import com.hexaware.simplyfly.exception.FlightNotFoundException;
+import com.hexaware.simplyfly.exception.UserNotFoundException;
+import com.hexaware.simplyfly.repository.BookedSeatRepository;
 import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.FlightRepository;
+import com.hexaware.simplyfly.repository.SeatRepository;
 import com.hexaware.simplyfly.repository.UserRepository;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 	@Autowired
-	private BookingRepository bookingRepo;
-	
-	@Autowired
-    private UserRepository userRepo;
+	BookingRepository bookingRepo;
 
-    @Autowired
-    private FlightRepository flightRepo;
+	@Autowired
+	UserRepository userRepo;
+
+	@Autowired
+	FlightRepository flightRepo;
+
+	@Autowired
+	BookedSeatRepository bookedSeatRepo;
+
+	@Autowired
+	SeatRepository seatRepo;
+
+	@Override
+	public Booking addBooking(BookingDto dto) throws BookingNotFoundException, FlightNotFoundException {
+		User user = userRepo.findById(dto.getPassengerId())
+				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + dto.getPassengerId()));
+
+		Flight flight = flightRepo.findById(dto.getFlightId())
+				.orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + dto.getFlightId()));
+
+		Booking booking = new Booking();
+		booking.setBookingDate(dto.getBookingDate());
+		booking.setTotalAmount(dto.getTotalAmount());
+		booking.setStatus(dto.getStatus().toUpperCase());
+		booking.setPassenger(user);
+		booking.setFlight(flight);
+
+		Booking savedBooking = bookingRepo.save(booking);
+
+		if (dto.getBookedSeatIds() != null && !dto.getBookedSeatIds().isEmpty()) {
+			for (Integer seatId : dto.getBookedSeatIds()) {
+				Seat seat = seatRepo.findById(seatId)
+						.orElseThrow(() -> new RuntimeException("Seat not found with ID: " + seatId));
+
+				seat.setBooked(true);
+				seatRepo.save(seat);
+
+				
+				BookedSeat bookedSeat = new BookedSeat();
+				bookedSeat.setBooking(savedBooking);
+				bookedSeat.setSeat(seat);
+				bookedSeat.setPassenger(user);
+				bookedSeat.setPrice(dto.getTotalAmount()); 
+
+				bookedSeatRepo.save(bookedSeat);
+			}
+		}
+
+		return savedBooking;
+	}
 
 	@Override
 	public Booking getBookingById(int id) throws BookingNotFoundException {
@@ -58,21 +109,4 @@ public class BookingServiceImpl implements BookingService {
 		return bookings;
 	}
 
-	@Override
-    public Booking addBooking(BookingDto dto) throws BookingNotFoundException {
-        User user = userRepo.findById(dto.getPaymentId())
-                .orElseThrow(() -> new BookingNotFoundException("User not found with ID: " + dto.getPaymentId()));
-
-        Flight flight = flightRepo.findById(dto.getFlightId())
-                .orElseThrow(() -> new BookingNotFoundException("Flight not found with ID: " + dto.getFlightId()));
-
-        Booking booking = new Booking();
-        booking.setBookingDate(dto.getBookingDate());
-        booking.setTotalAmount(dto.getTotalAmount());
-        booking.setStatus(dto.getStatus().toUpperCase());
-        booking.setPassenger(user);
-        booking.setFlight(flight);
-
-        return bookingRepo.save(booking);
-    }
 }

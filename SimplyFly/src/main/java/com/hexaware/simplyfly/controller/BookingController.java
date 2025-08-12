@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hexaware.simplyfly.dto.BookingDto;
 import com.hexaware.simplyfly.entity.Booking;
 import com.hexaware.simplyfly.exception.BookingNotFoundException;
+import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.service.BookingService;
 
 import jakarta.validation.Valid;
@@ -24,8 +25,8 @@ public class BookingController {
 	@Autowired
 	private BookingService bookingService;
 
-	@PostMapping
-	public Booking addBooking(@Valid @RequestBody BookingDto bookingDto) throws BookingNotFoundException {
+	@PostMapping("/add")
+	public Booking addBooking(@Valid @RequestBody BookingDto bookingDto) throws BookingNotFoundException, FlightNotFoundException {
 		return bookingService.addBooking(bookingDto);
 	}
 

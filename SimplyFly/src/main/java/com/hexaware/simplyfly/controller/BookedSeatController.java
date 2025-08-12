@@ -23,10 +23,7 @@ public class BookedSeatController {
     @Autowired
     private BookedSeatService bookedSeatService;
     
-    @PostMapping
-    public BookedSeat addBookedSeat(@Valid @RequestBody BookedSeatDto bookedSeatDto) {
-        return bookedSeatService.addBookedSeatFromDto(bookedSeatDto);
-    }
+   
 
     @GetMapping("/booking/{bookingId}")
     public List<BookedSeat> getBookedSeatsByBooking(@PathVariable int bookingId) {

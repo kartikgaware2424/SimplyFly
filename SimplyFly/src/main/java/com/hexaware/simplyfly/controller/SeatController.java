@@ -12,20 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hexaware.simplyfly.dto.SeatDto;
 import com.hexaware.simplyfly.entity.Seat;
+import com.hexaware.simplyfly.exception.BookingNotFoundException;
+import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 import com.hexaware.simplyfly.service.SeatService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/seats")
+@RequestMapping("/seats")
 public class SeatController {
 
 	@Autowired
 	private SeatService seatService;
 
-	@PostMapping
-	public Seat addSeat(@Valid @RequestBody SeatDto seatDto) {
+	@PostMapping("/add")
+	public Seat addSeat(@Valid @RequestBody SeatDto seatDto) throws FlightNotFoundException, BookingNotFoundException {
 		return seatService.addSeat(seatDto);
 	}
 

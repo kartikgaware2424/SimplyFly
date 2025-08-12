@@ -30,11 +30,11 @@ public class Booking {
     private String status; // "CONFIRMED", "CANCELLED", etc.
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User passenger; // Passenger who made the booking
 
     @ManyToOne
-    @JoinColumn(name = "flight_id", nullable = false)
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)

@@ -9,6 +9,8 @@ import com.hexaware.simplyfly.dto.SeatDto;
 import com.hexaware.simplyfly.entity.Booking;
 import com.hexaware.simplyfly.entity.Flight;
 import com.hexaware.simplyfly.entity.Seat;
+import com.hexaware.simplyfly.exception.BookingNotFoundException;
+import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.FlightRepository;
@@ -25,6 +27,27 @@ public class SeatServiceImpl implements SeatService {
 
 	@Autowired
 	private BookingRepository bookingRepo;
+	
+	@Override
+	public Seat addSeat(SeatDto seatDto) throws FlightNotFoundException, BookingNotFoundException {
+		Seat seat = new Seat();
+		seat.setSeatNumber(seatDto.getSeatNumber());
+		seat.setBooked(seatDto.isBooked());
+		seat.setSeatClass(seatDto.getSeatClass());
+
+		Flight flight = flightRepo.findById(seatDto.getFlightId())
+	            .orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + seatDto.getFlightId()));
+	    seat.setFlight(flight);
+
+	    
+	    if (seatDto.getBookingId() > 0) {
+	        Booking booking = bookingRepo.findById(seatDto.getBookingId()).orElse(null);
+	                
+	        seat.setBooking(booking);
+	    }
+
+		return seatRepo.save(seat);
+	}
 
 	@Override
 	public Seat getSeatById(int id) throws SeatNotAvailableException {
@@ -49,26 +72,7 @@ public class SeatServiceImpl implements SeatService {
 		return seats;
 	}
 
-	@Override
-	public Seat addSeat(SeatDto seatDto) {
-		Seat seat = new Seat();
-		seat.setSeatNumber(seatDto.getSeatNumber());
-		seat.setBooked(seatDto.isBooked());
-		seat.setSeatClass(seatDto.getSeatClass());
-
-		Flight flight = flightRepo.findById(seatDto.getFlightId())
-	            .orElseThrow(() -> new RuntimeException("Flight not found with ID: " + seatDto.getFlightId()));
-	    seat.setFlight(flight);
-
-	    
-	    if (seatDto.getBookingId() > 0) {
-	        Booking booking = bookingRepo.findById(seatDto.getBookingId())
-	                .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + seatDto.getBookingId()));
-	        seat.setBooking(booking);
-	    }
-
-		return seatRepo.save(seat);
-	}
+	
 
 	@Override
 	public List<Seat> getSeatsByFlightName(String flightName) throws SeatNotAvailableException {

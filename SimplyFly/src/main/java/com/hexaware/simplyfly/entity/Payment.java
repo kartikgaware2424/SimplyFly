@@ -34,7 +34,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus status; // SUCCESS, FAILED
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "booking_id", nullable = false, unique = true)
     private Booking booking;
 }

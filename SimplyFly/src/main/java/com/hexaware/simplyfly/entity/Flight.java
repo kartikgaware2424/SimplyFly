@@ -27,7 +27,7 @@ public class Flight {
 
 	private String flightName;
 
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
 	private String flightNumber;
 
 	private int totalSeats;
@@ -40,11 +40,11 @@ public class Flight {
 	private LocalDateTime arrivalTime;
 
 	@ManyToOne
-	@JoinColumn(name = "route_id", nullable = false)
+	@JoinColumn(name = "route_id")
 	private Route route;
 
 	@ManyToOne
-	@JoinColumn(name = "owner_id", nullable = false)
+	@JoinColumn(name = "owner_id")
 	private User owner; // Flight owner
 
 	@OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)

@@ -7,7 +7,8 @@ import com.hexaware.simplyfly.dto.UserDto;
 import com.hexaware.simplyfly.entity.User;
 
 public interface UserService {
-	
+
+	User addUser(UserDto userDto);
 
 	User getUserById(int id);
 
@@ -16,7 +17,6 @@ public interface UserService {
 	List<User> getUsersByRole(String role);
 
 	List<User> getUserByEmail(String email);
-
-	User addUser(UserDto userDto);
+	String deleteUser(int id);
 
 }

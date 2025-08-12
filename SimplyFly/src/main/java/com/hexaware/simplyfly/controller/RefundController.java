@@ -23,31 +23,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/refunds")
 public class RefundController {
 
-    @Autowired
-    private RefundService refundService;
+	@Autowired
+	private RefundService refundService;
 
-    // Get refund by ID
-    @GetMapping("/{id}")
-    public Refund getRefundById(@PathVariable int id) throws RefundNotFoundException {
-        return refundService.getRefundById(id);
-    }
+	// Add new refund
+	@PostMapping("/add")
+	public Refund addRefund(@Valid @RequestBody RefundDto refundDto)
+			throws UserNotFoundException, BookingNotFoundException {
+		return refundService.addRefund(refundDto);
+	}
 
-    // Get refunds for a specific user
-    @GetMapping("/user/{userId}")
-    public List<Refund> getRefundsByUser(@PathVariable int userId) throws RefundNotFoundException {
-        return refundService.getRefundsByUser(userId);
-    }
+	// Get refund by ID
+	@GetMapping("/{id}")
+	public Refund getRefundById(@PathVariable int id) throws RefundNotFoundException {
+		return refundService.getRefundById(id);
+	}
 
-    // Get refund by booking ID
-    @GetMapping("/booking/{bookingId}")
-    public Refund getRefundByBooking(@PathVariable int bookingId) throws RefundNotFoundException {
-        return refundService.getRefundByBooking(bookingId);
-    }
+	// Get refunds for a specific user
+	@GetMapping("/user/{userId}")
+	public List<Refund> getRefundsByUser(@PathVariable int userId) throws RefundNotFoundException {
+		return refundService.getRefundsByUser(userId);
+	}
 
-    // Add new refund
-    @PostMapping
-    public Refund addRefund(@Valid @RequestBody RefundDto refundDto)
-            throws UserNotFoundException, BookingNotFoundException {
-        return refundService.addRefund(refundDto);
-    }
+	// Get refund by booking ID
+	@GetMapping("/booking/{bookingId}")
+	public Refund getRefundByBooking(@PathVariable int bookingId) throws RefundNotFoundException {
+		return refundService.getRefundByBooking(bookingId);
+	}
+
 }
