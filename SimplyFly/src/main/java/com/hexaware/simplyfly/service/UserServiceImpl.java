@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
 		user.setPassword(userDto.getPassword());
-        user.setRole(UserRole.valueOf(userDto.getRole().name()));// convert the enum to string
+        user.setRole(UserRole.valueOf(userDto.getRole().name()));
 		user.setContactNumber(userDto.getContactNumber());
 		user.setGender(userDto.getGender());
 		user.setAge(userDto.getAge()); 

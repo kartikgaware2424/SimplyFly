@@ -3,6 +3,7 @@ package com.hexaware.simplyfly.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,33 +21,34 @@ import com.hexaware.simplyfly.service.RefundService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/refunds")
+@RequestMapping("/api/refunds")
 public class RefundController {
 
 	@Autowired
 	private RefundService refundService;
 
-
 	@PostMapping("/add")
+	@PreAuthorize("hasAnyRole('PASSENGER','ADMIN')")
 	public Refund addRefund(@Valid @RequestBody RefundDto refundDto)
 			throws UserNotFoundException, BookingNotFoundException {
 		return refundService.addRefund(refundDto);
 	}
 
-
 	@GetMapping("/getById/{id}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public Refund getRefundById(@PathVariable int id) throws RefundNotFoundException {
 		return refundService.getRefundById(id);
 	}
 
-	
 	@GetMapping("/getByuser/{userId}")
+	@PreAuthorize("hasAnyRole('PASSENGER','ADMIN')")
 	public List<Refund> getRefundsByUser(@PathVariable int userId) throws RefundNotFoundException {
 		return refundService.getRefundsByUser(userId);
 	}
 
-	// Get refund by booking ID
+	
 	@GetMapping("/booking/{bookingId}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public Refund getRefundByBooking(@PathVariable int bookingId) throws RefundNotFoundException {
 		return refundService.getRefundByBooking(bookingId);
 	}

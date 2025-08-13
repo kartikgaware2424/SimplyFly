@@ -1,5 +1,7 @@
 package com.hexaware.simplyfly.dto;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +19,7 @@ public class SeatDto {
 
 	
 	@Pattern(regexp = "^[0-9]{1,2}[A-Z]$", message = "Seat number must be in format like '12A'")
+	@UniqueElements
 	private String seatNumber;
 
 	@NotNull(message = "Booking status must be provided")
@@ -30,5 +33,5 @@ public class SeatDto {
 	private int flightId;
 
 
-	private int bookingId; // Optional because a seat might not be booked yet
+	private int bookingId; // Can Optional because a seat might not be booked yet
 }

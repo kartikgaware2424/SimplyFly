@@ -43,7 +43,7 @@ public class UserRestController {
             );
             if (auth.isAuthenticated()) {
                 String token = jwtService.generateToken(authRequest.getEmail());
-                return ResponseEntity.ok("Token :"+token);
+                return ResponseEntity.ok(token);
             }
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Invalid credentials");

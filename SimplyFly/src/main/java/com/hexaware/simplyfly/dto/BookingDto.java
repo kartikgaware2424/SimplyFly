@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class BookingDto {
 
 
-	@FutureOrPresent
+	@FutureOrPresent(message="Must be present or future")
 	private LocalDateTime bookingDate;
 
 	@Positive

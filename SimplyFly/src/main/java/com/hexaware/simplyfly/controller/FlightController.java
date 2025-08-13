@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.hexaware.simplyfly.service.FlightService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/api/flights")
 public class FlightController {
 
 	@Autowired
@@ -30,24 +31,28 @@ public class FlightController {
 
 	
 	@PostMapping("/add")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
 	public Flight addFlight(@RequestBody @Valid FlightDto flightDto) throws FlightNotFoundException {
 		return flightService.addFlight(flightDto);
 	}
 
 	
 	@GetMapping("getById/{id}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public Flight getFlightById(@PathVariable int id) throws FlightNotFoundException {
 		return flightService.getFlightById(id);
 	}
 
 	
-	@GetMapping("/search/{origin}/{destination}")
+	@GetMapping("/searchByRoute/{origin}/{destination}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public List<Flight> searchFlights(@PathVariable String origin, @PathVariable String destination)
 			throws FlightNotFoundException {
 		return flightService.searchFlights(origin, destination);
 	}
 	
     @PutMapping("/updateById/{id}")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public Flight updateFlight(@PathVariable int id, @RequestBody @Valid FlightDto flightDto)
             throws FlightNotFoundException {
         return flightService.updateFlight(id, flightDto);
@@ -55,13 +60,15 @@ public class FlightController {
 
     
     @DeleteMapping("/deleteById/{id}")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public String deleteFlight(@PathVariable int id) throws FlightNotFoundException {
         flightService.deleteFlight(id);
         return "Flight with ID " + id + " deleted successfully.";
     }
 
 	
-	@GetMapping("/search/{origin}/{destination}/{departureDate}")
+	@GetMapping("/searchByRouteAndDate/{origin}/{destination}/{departureDate}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public List<Flight> searchFlightsByDate(@PathVariable String origin, @PathVariable String destination,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate)
 			throws FlightNotFoundException {
@@ -70,6 +77,7 @@ public class FlightController {
 
 	
 	@GetMapping("/getByOwner/{ownerId}")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
 	public List<Flight> getFlightsByOwner(@PathVariable int ownerId) throws FlightNotFoundException {
 		return flightService.getFlightsByOwner(ownerId);
 	}

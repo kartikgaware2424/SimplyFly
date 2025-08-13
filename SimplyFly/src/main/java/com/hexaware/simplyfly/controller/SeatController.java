@@ -3,6 +3,7 @@ package com.hexaware.simplyfly.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,33 +21,38 @@ import com.hexaware.simplyfly.service.SeatService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/seats")
+@RequestMapping("/api/seats")
 public class SeatController {
 
 	@Autowired
 	private SeatService seatService;
 
 	@PostMapping("/add")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN','PASSENGER')")
 	public Seat addSeat(@Valid @RequestBody SeatDto seatDto) throws FlightNotFoundException, BookingNotFoundException {
 		return seatService.addSeat(seatDto);
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public Seat getSeatById(@PathVariable int id) throws SeatNotAvailableException {
 		return seatService.getSeatById(id);
 	}
 
 	@GetMapping("/getflightId/{flightId}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public List<Seat> getSeatsByFlight(@PathVariable int flightId) throws SeatNotAvailableException {
 		return seatService.getSeatsByFlight(flightId);
 	}
 
 	@GetMapping("/getByStatus/{isBooked}")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
 	public List<Seat> getSeatsByBookingStatus(@PathVariable boolean isBooked) throws SeatNotAvailableException {
 		return seatService.getSeatsByBookingStatus(isBooked);
 	}
 
 	@GetMapping("/getByFlight/name/{flightName}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public List<Seat> getSeatsByFlightName(@PathVariable String flightName) throws SeatNotAvailableException {
 		return seatService.getSeatsByFlightName(flightName);
 	}

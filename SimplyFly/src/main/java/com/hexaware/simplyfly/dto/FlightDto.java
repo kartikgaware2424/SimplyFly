@@ -14,54 +14,51 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightDto {
-	 
-	    @Size(max = 100)
-	    private String flightName;
 
-	   
-	    @Size(max = 20)
-	    private String flightNumber;
+	@Size(max = 100, message = "Flight name cannot exceed 100 characters.")
+	@NotBlank(message = "Flight name is required.")
+	private String flightName;
 
-	    
-	    @Min(1)
-	    @Max(1000)
-	    private Integer totalSeats;
+	@Size(max = 20, message = "Flight number cannot exceed 20 characters.")
+	@NotBlank(message = "Flight number is required.")
+	private String flightNumber;
 
-	   
-	    @Positive
-	    @Max(100000)
-	    private Double fare;
+	@Min(value = 1, message = "Total seats must be at least 1.")
+	@Max(value = 1000, message = "Total seats cannot exceed 1000.")
+	@NotNull(message = "Total seats is required.")
+	private Integer totalSeats;
 
-	    
-	    @Size(max = 20)
-	    private String baggageCheckIn;
+	@Positive(message = "Fare must be a positive value.")
+	@Max(value = 100000, message = "Fare cannot exceed 100,000.")
+	@NotNull(message = "Fare is required.")
+	private Double fare;
 
-	   
-	    @Size(max = 20)
-	    private String baggageCabin;
+	@Size(max = 20, message = "Baggage check-in description cannot exceed 20 characters.")
+	@NotBlank(message = "Baggage check-in information is required.")
+	private String baggageCheckIn;
 
-	    
-	    @FutureOrPresent
-	    private LocalDate departureDate;
+	@Size(max = 20, message = "Baggage cabin description cannot exceed 20 characters.")
+	@NotBlank(message = "Baggage cabin information is required.")
+	private String baggageCabin;
 
-	   
-	    @FutureOrPresent
-	    private LocalDateTime departureTime;
+	@FutureOrPresent(message = "Departure date must be today or in the future.")
+	@NotNull(message = "Departure date is required.")
+	private LocalDate departureDate;
 
-	   
-	    @FutureOrPresent
-	    private LocalDateTime arrivalTime;
+	@FutureOrPresent(message = "Departure time must be today or in the future.")
+	@NotNull(message = "Departure time is required.")
+	private LocalDateTime departureTime;
 
-	   
-	   
-	    private Integer routeId;
+	@FutureOrPresent(message = "Arrival time must be today or in the future.")
+	@NotNull(message = "Arrival time is required.")
+	private LocalDateTime arrivalTime;
 
-	   
-	   
-	    private Integer ownerId;
+	
+	private Integer routeId;
+
+	private Integer ownerId;
 }

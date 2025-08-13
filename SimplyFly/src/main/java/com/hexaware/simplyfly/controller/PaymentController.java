@@ -3,6 +3,7 @@ package com.hexaware.simplyfly.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,31 +20,34 @@ import com.hexaware.simplyfly.service.PaymentService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/api/payments")
 public class PaymentController {
 
-    @Autowired
-    private PaymentService paymentService;
-    
-    @PostMapping("/add")
-    public Payment addPayment(@Valid @RequestBody PaymentDto paymentDto) throws BookingNotFoundException {
-        return paymentService.addPayment(paymentDto);
-    }
+	@Autowired
+	private PaymentService paymentService;
 
-    @GetMapping("/getById/{id}")
-    public Payment getPaymentById(@PathVariable int id) {
-        return paymentService.getPaymentById(id);
-    }
+	@PostMapping("/add")
+	@PreAuthorize("hasAnyRole('PASSENGER','ADMIN')")
+	public Payment addPayment(@Valid @RequestBody PaymentDto paymentDto) throws BookingNotFoundException {
+		return paymentService.addPayment(paymentDto);
+	}
 
-    @GetMapping("/getBystatus/{status}")
-    public List<Payment> getPaymentsByStatus(@PathVariable String status) {
-        return paymentService.getPaymentsByStatus(status);
-    }
+	@GetMapping("/getById/{id}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
+	public Payment getPaymentById(@PathVariable int id) {
+		return paymentService.getPaymentById(id);
+	}
 
-    @GetMapping("/getBybooking/{bookingId}")
-    public Payment getPaymentByBooking(@PathVariable int bookingId) throws PaymentFailedException {
-        return paymentService.getPaymentByBooking(bookingId);
-    }
+	@GetMapping("/getBystatus/{status}")
+	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+	public List<Payment> getPaymentsByStatus(@PathVariable String status) {
+		return paymentService.getPaymentsByStatus(status);
+	}
 
-    
+	@GetMapping("/getBybooking/{bookingId}")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
+	public Payment getPaymentByBooking(@PathVariable int bookingId) throws PaymentFailedException {
+		return paymentService.getPaymentByBooking(bookingId);
+	}
+
 }

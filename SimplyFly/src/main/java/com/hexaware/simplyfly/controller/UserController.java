@@ -20,40 +20,44 @@ import com.hexaware.simplyfly.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
 	@PostMapping("/add")
+	@PreAuthorize("hasRole('ADMIN')")
 	public User addUser(@Valid @RequestBody UserDto userDto) {
 		return userService.addUser(userDto);
 	}
 
 	@GetMapping("getUserById/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN','OWNER')")
 	public User getUserById(@PathVariable int id) {
 		return userService.getUserById(id);
 	}
 
 	@GetMapping("/getAll")
-	@PreAuthorize("hasRole('PASSENGER')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 
 	@GetMapping("/getUserByRole/{role}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> getUsersByRole(@PathVariable String role) {
 		return userService.getUsersByRole(role);
 	}
 
 	@GetMapping("/getUserByEmail/{email}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public Optional<User> getUserByEmail(@PathVariable String email) {
 		return userService.getUserByEmail(email);
 	}
 
 	@DeleteMapping("/deleteById/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String deleteUser(@PathVariable int id) {
 		userService.deleteUser(id);
 		return "User deleted Successfully ";

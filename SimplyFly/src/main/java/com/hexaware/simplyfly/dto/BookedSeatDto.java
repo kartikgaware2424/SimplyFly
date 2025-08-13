@@ -1,6 +1,5 @@
 package com.hexaware.simplyfly.dto;
 
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -14,22 +13,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class BookedSeatDto {
-	@NotNull
-    @Min(1)
-    
-    private int bookingId;
+	@NotNull(message = "Booking ID cannot be null")
+	@Min(value = 1, message = "Booking ID must be greater than or equal to 1")
+	private int bookingId;
 
-    @NotNull
-    @Min(1)
-   
-    private int seatId;
+	@NotNull(message = "Seat ID cannot be null")
+	@Min(value = 1, message = "Seat ID must be greater than or equal to 1")
+	private int seatId;
 
-    @NotNull
-    @Min(1)
-   
-    private int passengerId;
+	@NotNull(message = "Passenger ID cannot be null")
+	@Min(value = 1, message = "Passenger ID must be greater than or equal to 1")
+	private int passengerId;
 
-    @Positive
-    @Max(1000000) // Example: max price is 1 million
-    private double price;
+	@Positive(message = "Price must be a positive value")
+	@Max(value = 1000000, message = "Price cannot exceed 1,000,000")
+	private double price;
 }
