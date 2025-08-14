@@ -19,7 +19,7 @@ public class SeatDto {
 
 	
 	@Pattern(regexp = "^[0-9]{1,2}[A-Z]$", message = "Seat number must be in format like '12A'")
-	@UniqueElements
+	
 	private String seatNumber;
 
 	@NotNull(message = "Booking status must be provided")
