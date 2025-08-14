@@ -36,10 +36,9 @@ class RouteServiceImplTest {
 
 	@Test
 	void addRoute_shouldAddRouteSuccessfully() {
-		RouteDto routeDto = new RouteDto("Mumbai", "Delhi", 1400.0, "2h 15m");
+		RouteDto routeDto = new RouteDto("Mumbai","Delhi",1400.0,"2h 15m");
 		Route savedRoute = routeService.addRoute(routeDto);
-
-		assertThat(savedRoute).isNotNull();
+        assertThat(savedRoute).isNotNull();
 
 	}
 
@@ -47,10 +46,8 @@ class RouteServiceImplTest {
 	void updateRoute_shouldUpdateExistingRoute() throws RouteNotFoundException {
 		RouteDto routeDto = new RouteDto("Mumbai", "Delhi", 1400.0, "2h 15m");
 		Route savedRoute = routeService.addRoute(routeDto);
-
 		RouteDto updateDto = new RouteDto("Mumbai", "Delhi", 1500.0, "2h 30m");
 		Route updatedRoute = routeService.updateRoute(savedRoute.getRouteId(), updateDto);
-
 		assertEquals(1500.0, updatedRoute.getDistanceInKm());
 		
 	}
@@ -59,15 +56,13 @@ class RouteServiceImplTest {
 	void updateRoute_shouldThrowException_whenRouteNotFound() {
 		RouteDto updateDto = new RouteDto("Mumbai", "Delhi", 1500.0, "2h 30m");
 		assertThrows(RouteNotFoundException.class, () -> {
-			routeService.updateRoute(999, updateDto);
-		});
+			routeService.updateRoute(999, updateDto);});
 	}
 
 	@Test
 	void deleteRoute_shouldDeleteExistingRoute() throws RouteNotFoundException {
 		RouteDto routeDto = new RouteDto("Mumbai", "Delhi", 1400.0, "2h 15m");
 		Route savedRoute = routeService.addRoute(routeDto);
-
 		routeService.deleteRoute(savedRoute.getRouteId());
 		assertThrows(RouteNotFoundException.class, () -> routeService.deleteRoute(savedRoute.getRouteId()));
 	}

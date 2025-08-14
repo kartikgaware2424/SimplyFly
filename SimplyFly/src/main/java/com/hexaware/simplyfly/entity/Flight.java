@@ -40,7 +40,7 @@ public class Flight {
 	private String baggageCheckIn; // e.g., 20kg
 	private String baggageCabin; // e.g., 7kg
 	private LocalDate departureDate; 
-	private LocalDateTime departureTime;
+	private LocalDateTime departureTime;//date with respect to time
 	private LocalDateTime arrivalTime;
 
 	@ManyToOne

@@ -19,7 +19,17 @@ import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 import com.hexaware.simplyfly.service.SeatService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles seat Controller 
+ * Features:
+ * add seat
+ * get seat by ID
+ * get seat by flight
+ * get  seat by status
+ * get seat  By flight name
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/seats")
 public class SeatController {

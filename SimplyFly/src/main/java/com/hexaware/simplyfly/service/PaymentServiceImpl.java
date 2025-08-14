@@ -14,7 +14,14 @@ import com.hexaware.simplyfly.exception.BookingNotFoundException;
 import com.hexaware.simplyfly.exception.PaymentFailedException;
 import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.PaymentRepository;
-
+/**Payment Service Implementation
+ * Logic:
+ * Add Payment
+ * Get Payment 
+ * Get Payment By status(Confirmed Pending)
+ * Get Payment By booking
+ * @author Kartik Gaware
+ */
 @Service
 public class PaymentServiceImpl implements PaymentService {
 	@Autowired

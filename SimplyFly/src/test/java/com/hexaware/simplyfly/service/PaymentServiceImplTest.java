@@ -77,14 +77,14 @@ class PaymentServiceImplTest {
 
 	@Test
 	void addPayment_shouldThrowExceptionWhenBookingNotFound() {
-		PaymentDto dto = new PaymentDto(4000.0, LocalDateTime.now(), "UPI", "TXN99999", "FAILED", 999);
+		PaymentDto dto = new PaymentDto(4000.0, LocalDateTime.now(),"UPI","TXN99999","FAILED",999);
 
 		assertThrows(BookingNotFoundException.class, () -> paymentService.addPayment(dto));
 	}
 
 	@Test
 	void getPaymentById_shouldReturnPayment() throws BookingNotFoundException {
-		PaymentDto dto = new PaymentDto(3000.0, LocalDateTime.now(), "CARD", "TXN100", "SUCCESS",
+		PaymentDto dto = new PaymentDto(3000.0, LocalDateTime.now(),"CARD","TXN100","SUCCESS",
 				booking.getBookingId());
 		Payment saved = paymentService.addPayment(dto);
 

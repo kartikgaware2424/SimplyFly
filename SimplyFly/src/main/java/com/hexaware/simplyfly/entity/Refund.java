@@ -39,11 +39,11 @@ public class Refund {
 
 
     @Enumerated(EnumType.STRING)
-    private RefundStatus status; //  PENDING, COMPLETED, FAILED
+    private RefundStatus status; //  PENDING,COMPLETED,FAILED
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // The passenger who initiated the refund
+    private User user; // The passenger who initiated the refund from user entity
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id", unique = true)

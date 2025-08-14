@@ -116,7 +116,7 @@ class BookingServiceImplTest {
         Booking booking = new Booking();
         booking.setBookingDate(LocalDateTime.now());
         booking.setFlight(flight);
-        booking.setPassenger(user); // passenger
+        booking.setPassenger(user); 
         booking = bookingRepo.save(booking);
 
         

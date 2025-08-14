@@ -25,7 +25,7 @@ import com.hexaware.simplyfly.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
 @SpringBootTest
-@Transactional 
+@Transactional
 class FlightServiceImplTest {
 
 	@Autowired
@@ -45,12 +45,11 @@ class FlightServiceImplTest {
 
 	@BeforeEach
 	void setUp() {
-		
+
 		flightRepo.deleteAll();
 		routeRepo.deleteAll();
 		userRepo.deleteAll();
 
-		// Create test route
 		route = new Route();
 		route.setOrigin("Mumbai");
 		route.setDestination("Delhi");
@@ -58,7 +57,6 @@ class FlightServiceImplTest {
 		route.setTravelDuration("2h 30m");
 		route = routeRepo.save(route);
 
-	
 		owner = new User();
 		owner.setName("Flight Owner");
 		owner.setEmail("owner@example.com");
@@ -74,7 +72,7 @@ class FlightServiceImplTest {
 
 		Flight savedFlight = flightService.addFlight(dto);
 		assertThat(savedFlight).isNotNull();
-		
+
 	}
 
 	@Test
@@ -95,7 +93,7 @@ class FlightServiceImplTest {
 				owner.getUserId());
 		flightService.addFlight(dto);
 
-		List<Flight> flights = flightService.searchFlights("Mumbai", "Delhi");
+		List<Flight> flights = flightService.searchFlights("Mumbai","Delhi");
 		assertThat(flights).isNotEmpty();
 	}
 
@@ -104,6 +102,7 @@ class FlightServiceImplTest {
 		FlightDto dto = new FlightDto("Flight 4", "F400", 120, 5000.0, "20kg", "7kg", LocalDate.now().plusDays(1),
 				LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(1).plusHours(2), route.getRouteId(),
 				owner.getUserId());
+		
 		Flight flight = flightService.addFlight(dto);
 
 		FlightDto updateDto = new FlightDto("Updated Flight", "UF400", 130, 5200.0, "22kg", "8kg",
@@ -112,7 +111,7 @@ class FlightServiceImplTest {
 
 		Flight updatedFlight = flightService.updateFlight(flight.getFlightId(), updateDto);
 		assertEquals("UF400", updatedFlight.getFlightNumber());
-		
+
 	}
 
 	@Test
@@ -124,6 +123,6 @@ class FlightServiceImplTest {
 
 		String message = flightService.deleteFlight(flight.getFlightId());
 		assertThat(message).contains("Deleted Successfully");
-		
+
 	}
 }

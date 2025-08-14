@@ -18,7 +18,17 @@ import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.service.BookingService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles Booking Controller 
+ * Features:
+ * add bookings
+ * get bookings by ID
+ * get booking by users
+ * get get booking by flight ID
+ * get booking By status
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {

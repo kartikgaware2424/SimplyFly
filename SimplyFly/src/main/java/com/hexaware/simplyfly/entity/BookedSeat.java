@@ -1,9 +1,6 @@
 package com.hexaware.simplyfly.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
-import com.hexaware.simplyfly.dto.BookingDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

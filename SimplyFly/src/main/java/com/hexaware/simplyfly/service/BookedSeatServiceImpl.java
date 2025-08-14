@@ -14,7 +14,13 @@ import com.hexaware.simplyfly.repository.BookedSeatRepository;
 import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.SeatRepository;
 import com.hexaware.simplyfly.repository.UserRepository;
-
+/**
+ * Booked Seat Service Implementation
+ * Logic:
+ * Get booked seat by booking
+ * Get booked seat by passenger
+ * @author Kartik Gaware
+ */
 @Service
 public class BookedSeatServiceImpl implements BookedSeatService {
 

@@ -16,7 +16,14 @@ import com.hexaware.simplyfly.entity.BookedSeat;
 import com.hexaware.simplyfly.service.BookedSeatService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles bookedSeat Controller 
+ * Features:
+ * getByBooking
+ * getByPassangerId
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/bookedSeats")
 public class BookedSeatController {

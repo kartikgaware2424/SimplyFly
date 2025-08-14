@@ -9,7 +9,15 @@ import com.hexaware.simplyfly.dto.RouteDto;
 import com.hexaware.simplyfly.entity.Route;
 import com.hexaware.simplyfly.exception.RouteNotFoundException;
 import com.hexaware.simplyfly.repository.RouteRepository;
-
+/***
+ * Route service implementation 
+ * Logic:
+ * Add route
+ * update route
+ * delete route
+ * @author: Kartik Gaware
+ * @date:10-08-2025
+ */
 @Service
 public class RouteServiceImpl implements RouteService {
 	@Autowired
@@ -32,8 +40,7 @@ public class RouteServiceImpl implements RouteService {
 	
 	@Override
 	public Route updateRoute(int routeId, RouteDto routeDto) throws RouteNotFoundException {
-	    Route existingRoute = routeRepo.findById(routeId)
-	            .orElseThrow(() -> new RouteNotFoundException("Route not found with ID: " + routeId));
+	    Route existingRoute = routeRepo.findById(routeId).orElseThrow(() -> new RouteNotFoundException("Route not found with ID: " + routeId));
 
 	    existingRoute.setOrigin(routeDto.getOrigin());
 	    existingRoute.setDestination(routeDto.getDestination());
@@ -45,8 +52,7 @@ public class RouteServiceImpl implements RouteService {
 
 	@Override
 	public void deleteRoute(int routeId) throws RouteNotFoundException {
-	    Route existingRoute = routeRepo.findById(routeId)
-	            .orElseThrow(() -> new RouteNotFoundException("Route not found with ID: " + routeId));
+	    Route existingRoute = routeRepo.findById(routeId).orElseThrow(() -> new RouteNotFoundException("Route not found with ID: " + routeId));
 
 	    routeRepo.delete(existingRoute);
 	}

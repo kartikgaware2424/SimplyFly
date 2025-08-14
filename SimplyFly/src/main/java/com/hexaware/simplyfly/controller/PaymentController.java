@@ -18,7 +18,18 @@ import com.hexaware.simplyfly.exception.PaymentFailedException;
 import com.hexaware.simplyfly.service.PaymentService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles payment Controller 
+ * Features:
+ * add payments
+ * get payment by ID
+ * get payment by status
+ * get payment by booking 
+ * 
+ * @author Kartik Gaware
+ * 
+ * 
+ */
 @RestController
 @RequestMapping("/api/payments")
 public class PaymentController {

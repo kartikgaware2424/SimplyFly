@@ -18,7 +18,17 @@ import com.hexaware.simplyfly.entity.User;
 import com.hexaware.simplyfly.service.UserService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles user Controller 
+ * Features:
+ * add user
+ * get user by ID
+ * get all user 
+ * get user by role
+ * get user by email
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

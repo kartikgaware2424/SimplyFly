@@ -54,7 +54,7 @@ class RefundServiceImplTest {
 		user.setPassword("password123");
 		user = userRepo.save(user);
 
-		// Create a booking
+		
 		booking = new Booking();
 		booking.setBookingDate(LocalDateTime.now());
 		booking.setPassenger(user);
@@ -64,7 +64,7 @@ class RefundServiceImplTest {
 
 	@Test
 	void addRefund_shouldAddRefundSuccessfully() {
-		RefundDto refundDto = new RefundDto(5000.0, LocalDateTime.now(), "UPI", "TXN12345", "Flight cancelled",
+		RefundDto refundDto = new RefundDto(5000.0, LocalDateTime.now(),"UPI","TXN12345","Flight cancelled",
 				"PENDING", user.getUserId(), booking.getBookingId());
 
 		Refund savedRefund = refundService.addRefund(refundDto);
@@ -75,7 +75,7 @@ class RefundServiceImplTest {
 
 	@Test
 	void getRefundById_shouldReturnRefund() throws RefundNotFoundException {
-		RefundDto refundDto = new RefundDto(5000.0, LocalDateTime.now(), "UPI", "TXN12346", "Flight cancelled",
+		RefundDto refundDto = new RefundDto(5000.0, LocalDateTime.now(),"UPI","TXN12346","Flight cancelled",
 				"PENDING", user.getUserId(), booking.getBookingId());
 		Refund savedRefund = refundService.addRefund(refundDto);
 
@@ -85,7 +85,7 @@ class RefundServiceImplTest {
 
 	@Test
 	void getRefundsByUser_shouldReturnRefunds() throws RefundNotFoundException {
-		RefundDto refundDto1 = new RefundDto(3000.0, LocalDateTime.now(), "UPI", "TXN100", "Flight cancelled",
+		RefundDto refundDto1 = new RefundDto(3000.0, LocalDateTime.now(),"UPI","TXN100","Flight cancelled",
 				"PENDING", user.getUserId(), booking.getBookingId());
 
 		refundService.addRefund(refundDto1);
@@ -96,7 +96,7 @@ class RefundServiceImplTest {
 
 	@Test
 	void getRefundByBooking_shouldReturnRefund() throws RefundNotFoundException {
-		RefundDto refundDto = new RefundDto(3000.0, LocalDateTime.now(), "UPI", "TXN101", "Flight cancelled", "PENDING",
+		RefundDto refundDto = new RefundDto(3000.0, LocalDateTime.now(),"UPI","TXN101","Flight cancelled", "PENDING",
 				user.getUserId(), booking.getBookingId());
 
 		Refund savedRefund = refundService.addRefund(refundDto);

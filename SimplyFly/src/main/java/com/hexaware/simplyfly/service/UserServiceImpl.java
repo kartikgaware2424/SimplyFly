@@ -11,7 +11,16 @@ import com.hexaware.simplyfly.entity.User;
 import com.hexaware.simplyfly.entity.UserRole;
 import com.hexaware.simplyfly.exception.UserNotFoundException;
 import com.hexaware.simplyfly.repository.UserRepository;
-
+/**
+ * This is the User Service Implementation 
+ * Logic
+ * Add the user
+ * Get the user by Id
+ * Get all the user 
+ * Get User by the email (Only to the Admin)
+ * Delete user(Only Admin can delete the user)
+ * @author Kartik Gaware
+ */
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired

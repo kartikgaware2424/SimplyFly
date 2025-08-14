@@ -19,7 +19,17 @@ import com.hexaware.simplyfly.exception.UserNotFoundException;
 import com.hexaware.simplyfly.service.RefundService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles refund Controller 
+ * Features:
+ * add refund
+ * get refund by ID
+ * get refund for specific users
+ * get refund by booking ID
+ * 
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/refunds")
 public class RefundController {

@@ -19,7 +19,16 @@ import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.FlightRepository;
 import com.hexaware.simplyfly.repository.SeatRepository;
 import com.hexaware.simplyfly.repository.UserRepository;
-
+/**
+ * Booking Service Implementation 
+ * Logic:
+ * Add booking
+ * Get booking by Id
+ * Get booking by flight
+ * Get booking by user
+ * Get booking by status
+ * @author Kartik Gaware
+ */
 @Service
 public class BookingServiceImpl implements BookingService {
 	@Autowired
@@ -39,11 +48,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public Booking addBooking(BookingDto dto) throws BookingNotFoundException, FlightNotFoundException {
-		User user = userRepo.findById(dto.getPassengerId())
-				.orElseThrow(() -> new UserNotFoundException("User not found with ID: " + dto.getPassengerId()));
+		User user = userRepo.findById(dto.getPassengerId()).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + dto.getPassengerId()));
 
-		Flight flight = flightRepo.findById(dto.getFlightId())
-				.orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + dto.getFlightId()));
+		Flight flight = flightRepo.findById(dto.getFlightId()).orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + dto.getFlightId()));
 
 		Booking booking = new Booking();
 		booking.setBookingDate(dto.getBookingDate());
@@ -56,8 +63,7 @@ public class BookingServiceImpl implements BookingService {
 
 		if (dto.getBookedSeatIds() != null && !dto.getBookedSeatIds().isEmpty()) {
 			for (Integer seatId : dto.getBookedSeatIds()) {
-				Seat seat = seatRepo.findById(seatId)
-						.orElseThrow(() -> new RuntimeException("Seat not found with ID: " + seatId));
+				Seat seat = seatRepo.findById(seatId).orElseThrow(() -> new RuntimeException("Seat not found with ID: " + seatId));
 
 				seat.setBooked(true);
 				seatRepo.save(seat);
@@ -78,8 +84,7 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public Booking getBookingById(int id) throws BookingNotFoundException {
-		return bookingRepo.findById(id)
-				.orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + id));
+		return bookingRepo.findById(id).orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + id));
 	}
 
 	@Override

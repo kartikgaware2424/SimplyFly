@@ -21,7 +21,18 @@ import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.service.FlightService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles flight Controller 
+ * Features:
+ * add flights
+ * get flight by ID
+ * search flight by routes
+ * search flight by owner ID
+ * get flight by owners
+ *
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/flights")
 public class FlightController {

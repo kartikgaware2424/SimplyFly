@@ -12,7 +12,16 @@ import com.hexaware.simplyfly.exception.FlightNotFoundException;
 import com.hexaware.simplyfly.repository.FlightRepository;
 import com.hexaware.simplyfly.repository.RouteRepository;
 import com.hexaware.simplyfly.repository.UserRepository;
-
+/**
+ * Flight Service Implementation 
+ * Logic:
+ * Add flight
+ * Get flight by ID
+ * Get flight by owner
+ * Search flight by date
+ * Update and Delete flight
+ * @author Kartik Gaware
+ */
 @Service
 public class FlightServiceImpl implements FlightService {
 
@@ -37,20 +46,16 @@ public class FlightServiceImpl implements FlightService {
 		flight.setDepartureDate(flightDto.getDepartureDate());
 		flight.setDepartureTime(flightDto.getDepartureTime());
 		flight.setArrivalTime(flightDto.getArrivalTime());
-		flight.setRoute(routeRepo.findById(flightDto.getRouteId())
-				.orElseThrow(() -> new FlightNotFoundException("Route not found with ID: " + flightDto.getRouteId())));
+		flight.setRoute(routeRepo.findById(flightDto.getRouteId()).orElseThrow(() -> new FlightNotFoundException("Route not found with ID: " + flightDto.getRouteId())));
 
-		flight.setOwner(userRepo.findById(flightDto.getOwnerId())
-				.orElseThrow(() -> new FlightNotFoundException("Owner not found with ID: " + flightDto.getOwnerId())));
-		;
+		flight.setOwner(userRepo.findById(flightDto.getOwnerId()).orElseThrow(() -> new FlightNotFoundException("Owner not found with ID: " + flightDto.getOwnerId())));;
 
 		return flightRepo.save(flight);
 	}
 
 	@Override
 	public Flight getFlightById(int id) throws FlightNotFoundException {
-		return flightRepo.findById(id)
-				.orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + id));
+		return flightRepo.findById(id).orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + id));
 	}
 
 	@Override
@@ -64,11 +69,9 @@ public class FlightServiceImpl implements FlightService {
 	@Override
 	public List<Flight> searchFlightsByDate(String origin, String destination, LocalDate departureDate)
 			throws FlightNotFoundException {
-		List<Flight> flights = flightRepo.findByRouteOriginAndRouteDestinationAndDepartureDate(origin, destination,
-				departureDate);
+		List<Flight> flights = flightRepo.findByRouteOriginAndRouteDestinationAndDepartureDate(origin, destination,departureDate);
 		if (flights.isEmpty())
-			throw new FlightNotFoundException(
-					"No flights found from " + origin + " to " + destination + " on " + departureDate);
+			throw new FlightNotFoundException("No flights found from " + origin + " to " + destination + " on " + departureDate);
 		return flights;
 	}
 
@@ -94,11 +97,9 @@ public class FlightServiceImpl implements FlightService {
 		flight.setDepartureDate(flightDto.getDepartureDate());
 		flight.setDepartureTime(flightDto.getDepartureTime());
 		flight.setArrivalTime(flightDto.getArrivalTime());
-		flight.setRoute(routeRepo.findById(flightDto.getRouteId())
-				.orElseThrow(() -> new FlightNotFoundException("Route not found with ID: " + flightDto.getRouteId())));
+		flight.setRoute(routeRepo.findById(flightDto.getRouteId()).orElseThrow(() -> new FlightNotFoundException("Route not found with ID: " + flightDto.getRouteId())));
 
-		flight.setOwner(userRepo.findById(flightDto.getOwnerId())
-				.orElseThrow(() -> new FlightNotFoundException("Owner not found with ID: " + flightDto.getOwnerId())));
+		flight.setOwner(userRepo.findById(flightDto.getOwnerId()).orElseThrow(() -> new FlightNotFoundException("Owner not found with ID: " + flightDto.getOwnerId())));
 		;
 
 		

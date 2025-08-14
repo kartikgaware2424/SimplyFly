@@ -19,7 +19,17 @@ import com.hexaware.simplyfly.exception.RouteNotFoundException;
 import com.hexaware.simplyfly.service.RouteService;
 
 import jakarta.validation.Valid;
-
+/**
+ * This class handles Route Controller 
+ * Features:
+ * add route
+ * get route by origin and destination
+ * update route
+ * get delete
+ * 
+ * @author Kartik Gaware
+ * 
+ */
 @RestController
 @RequestMapping("/api/routes")
 public class RouteController {

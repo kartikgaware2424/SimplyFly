@@ -15,7 +15,15 @@ import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.FlightRepository;
 import com.hexaware.simplyfly.repository.SeatRepository;
-
+/**
+ * Seat Service Implementation 
+ * Add seat
+ * Get seat By Id
+ * Get seat By Flight
+ * Get seat By Status(True/False)
+ * Get seat by flight Name
+ * @author Kartik Gaware
+ */
 @Service
 public class SeatServiceImpl implements SeatService {
 
@@ -35,8 +43,7 @@ public class SeatServiceImpl implements SeatService {
 		seat.setBooked(seatDto.isBooked());
 		seat.setSeatClass(seatDto.getSeatClass());
 
-		Flight flight = flightRepo.findById(seatDto.getFlightId())
-	            .orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + seatDto.getFlightId()));
+		Flight flight = flightRepo.findById(seatDto.getFlightId()).orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + seatDto.getFlightId()));
 	    seat.setFlight(flight);
 
 	    
