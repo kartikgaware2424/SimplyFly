@@ -12,4 +12,5 @@ public interface RefundRepository extends JpaRepository<Refund, Integer> {
 	List<Refund> findByUserUserId(int userId);
 
 	Refund findByBookingBookingId(int bookingId);
+	List<Refund> findByBooking_Flight_Owner_UserId(int ownerId);
 }

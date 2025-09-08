@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,12 @@ public class BookingController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<Booking> getBookingsByStatus(@PathVariable String status) throws BookingNotFoundException {
 		return bookingService.getBookingsByStatus(status);
+	}
+	
+	@DeleteMapping("/cancel/{id}")
+	@PreAuthorize("hasRole('PASSENGER')")
+	public String cancelBooking(@PathVariable int id) throws BookingNotFoundException {
+	    return bookingService.cancelBooking(id);
 	}
 
 }

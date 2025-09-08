@@ -3,6 +3,7 @@ package com.hexaware.simplyfly.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hexaware.simplyfly.dto.BookingDto;
 
 import jakarta.persistence.Entity;
@@ -43,9 +44,11 @@ public class Refund {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user; // The passenger who initiated the refund from user entity
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id", unique = true)
+    @JsonIgnore
     private Booking booking;
 }

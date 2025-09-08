@@ -3,6 +3,8 @@ package com.hexaware.simplyfly.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -51,10 +53,12 @@ public class FlightDto {
 
 	@FutureOrPresent(message = "Departure time must be today or in the future.")
 	@NotNull(message = "Departure time is required.")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime departureTime;
 
 	@FutureOrPresent(message = "Arrival time must be today or in the future.")
 	@NotNull(message = "Arrival time is required.")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime arrivalTime;
 
 	

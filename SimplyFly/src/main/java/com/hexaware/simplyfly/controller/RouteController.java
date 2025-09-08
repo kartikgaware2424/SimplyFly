@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import jakarta.validation.Valid;
  * @author Kartik Gaware
  * 
  */
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/routes")
 public class RouteController {
@@ -48,6 +50,12 @@ public class RouteController {
 	public List<Route> searchRoutes(@PathVariable String origin, @PathVariable String destination) {
 		return routeService.searchRoutes(origin, destination);
 	}
+	
+	@GetMapping("/getAllRoutes")
+	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
+	public List<Route>getAllRoutes() {
+		return routeService.getAllRoutes();
+	}
 
 	@PutMapping("/updateById/{id}")
 	@PreAuthorize("hasAnyRole('OWNER','ADMIN')")
@@ -62,4 +70,6 @@ public class RouteController {
 		routeService.deleteRoute(id);
 		return "Route deleted successfully with ID: " + id;
 	}
+	
+	
 }

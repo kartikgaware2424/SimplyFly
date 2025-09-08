@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hexaware.simplyfly.dto.BookingDto;
 
 import jakarta.persistence.CascadeType;
@@ -52,5 +53,6 @@ public class Flight {
 	private User owner; // Flight owner
 
 	@OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Seat> seats;
 }

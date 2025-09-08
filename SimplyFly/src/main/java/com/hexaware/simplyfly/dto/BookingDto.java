@@ -3,9 +3,10 @@ package com.hexaware.simplyfly.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class BookingDto {
 
 
-	@FutureOrPresent(message="Must be present or future")
+	//@FutureOrPresent(message="Must be present or future")
 	private LocalDateTime bookingDate;
 
 	@Positive
@@ -35,6 +36,7 @@ public class BookingDto {
 	
 	@Min(1)
     private int flightId;
+
 
 	private List<Integer> bookedSeatIds;
 

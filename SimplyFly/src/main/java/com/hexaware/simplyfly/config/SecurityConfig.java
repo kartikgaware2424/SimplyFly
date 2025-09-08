@@ -28,14 +28,19 @@ public class SecurityConfig {
 	private final UserInfoServiceImpl userServiceImpl;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http, PasswordEncoder passwordEncoder)
-			throws Exception {
-		return http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/auth/**").permitAll().anyRequest()
-						.authenticated())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authenticationProvider(authenticationProvider(passwordEncoder))
-				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+	    return http
+	            .cors() // <-- Enable CORS
+	            .and()
+	            .csrf(csrf -> csrf.disable())
+	            .authorizeHttpRequests(auth -> 
+	                auth.requestMatchers("/auth/**", "/api/auth/**").permitAll()
+	                    .anyRequest().authenticated()
+	            )
+	            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	            .authenticationProvider(authenticationProvider(passwordEncoder))
+	            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+	            .build();
 	}
 
 	@Bean

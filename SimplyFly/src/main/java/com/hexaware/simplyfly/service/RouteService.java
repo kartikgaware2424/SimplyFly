@@ -10,6 +10,8 @@ public interface RouteService {
 	Route addRoute(RouteDto routeDto);
 
 	List<Route> searchRoutes(String origin, String destination);
+	
+	List<Route> getAllRoutes();
 
 	Route updateRoute(int routeId, RouteDto routeDto) throws RouteNotFoundException;
 

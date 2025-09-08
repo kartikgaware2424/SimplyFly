@@ -1,11 +1,14 @@
 package com.hexaware.simplyfly.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.simplyfly.dto.BookingDto;
+import com.hexaware.simplyfly.dto.RefundDto;
 import com.hexaware.simplyfly.entity.BookedSeat;
 import com.hexaware.simplyfly.entity.Booking;
 import com.hexaware.simplyfly.entity.Flight;
@@ -19,6 +22,8 @@ import com.hexaware.simplyfly.repository.BookingRepository;
 import com.hexaware.simplyfly.repository.FlightRepository;
 import com.hexaware.simplyfly.repository.SeatRepository;
 import com.hexaware.simplyfly.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 /**
  * Booking Service Implementation 
  * Logic:
@@ -29,6 +34,7 @@ import com.hexaware.simplyfly.repository.UserRepository;
  * Get booking by status
  * @author Kartik Gaware
  */
+@Transactional
 @Service
 public class BookingServiceImpl implements BookingService {
 	@Autowired
@@ -45,6 +51,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	SeatRepository seatRepo;
+	
+	@Autowired
+	private RefundService refundService;
 
 	@Override
 	public Booking addBooking(BookingDto dto) throws BookingNotFoundException, FlightNotFoundException {
@@ -64,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
 		if (dto.getBookedSeatIds() != null && !dto.getBookedSeatIds().isEmpty()) {
 			for (Integer seatId : dto.getBookedSeatIds()) {
 				Seat seat = seatRepo.findById(seatId).orElseThrow(() -> new RuntimeException("Seat not found with ID: " + seatId));
-
+				seat.setBooking(savedBooking);
 				seat.setBooked(true);
 				seatRepo.save(seat);
 
@@ -112,6 +121,56 @@ public class BookingServiceImpl implements BookingService {
 			throw new BookingNotFoundException("No bookings found with status: " + status);
 		}
 		return bookings;
+	}
+	
+//	public String cancelBooking(int bookingId) throws BookingNotFoundException {
+//	    Booking booking = bookingRepo.findById(bookingId)
+//	            .orElseThrow(() -> new BookingNotFoundException("Booking not found"));
+//
+//	    // Check if cancellation is allowed (1 day before departure)
+////	    if (booking.getFlight().getDepartureTime().isBefore(LocalDateTime.now().plusDays(1))) {
+////	        throw new RuntimeException("Cancellation not allowed within 24 hours of departure");
+////	    }
+//
+//	    // Create refund request
+//	    RefundDto refundDto = new RefundDto(
+//	            booking.getTotalAmount(),
+//	            LocalDateTime.now(),
+//	            "BANK_TRANSFER", // or set default
+//	            "TXN-" + UUID.randomUUID(),
+//	            "User cancelled booking",
+//	            "PENDING",
+//	            booking.getPassenger().getUserId(),
+//	            booking.getBookingId()
+//	    );
+//	    refundService.addRefund(refundDto);
+//
+//	    bookingRepo.delete(booking);
+//	    return "Booking cancelled, refund initiated.";
+//	}
+	
+	public String cancelBooking(int bookingId) throws BookingNotFoundException {
+	    Booking booking = bookingRepo.findById(bookingId)
+	            .orElseThrow(() -> new BookingNotFoundException("Booking not found"));
+
+	    // Mark as cancelled
+	    booking.setStatus("CANCELLED");
+	    bookingRepo.save(booking);
+
+	    // Create refund request
+	    RefundDto refundDto = new RefundDto(
+	            booking.getTotalAmount(),
+	            LocalDateTime.now(),
+	            "BANK_TRANSFER", // default
+	            "TXN-" + UUID.randomUUID(),
+	            "User cancelled booking",
+	            "PENDING",
+	            booking.getPassenger().getUserId(),
+	            booking.getBookingId()
+	    );
+	    refundService.addRefund(refundDto);
+
+	    return "Booking cancelled, refund initiated.";
 	}
 
 }

@@ -61,7 +61,6 @@ public class UserController {
 	}
 
 	@GetMapping("/getUserByEmail/{email}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	public Optional<User> getUserByEmail(@PathVariable String email) {
 		return userService.getUserByEmail(email);
 	}

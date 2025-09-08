@@ -3,6 +3,7 @@ package com.hexaware.simplyfly.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hexaware.simplyfly.dto.BookingDto;
 
 import jakarta.persistence.Entity;
@@ -32,5 +33,6 @@ public class Route {
     private String travelDuration; //e.g 2h 15m
 
     @OneToMany(mappedBy = "route")
+    @JsonIgnore
     private List<Flight> flights;
 }

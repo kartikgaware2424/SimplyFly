@@ -56,6 +56,11 @@ public class RouteServiceImpl implements RouteService {
 
 	    routeRepo.delete(existingRoute);
 	}
+	@Override
+	public List<Route> getAllRoutes() {
+		
+		return routeRepo.findAll();
+	}
 
 	
 }

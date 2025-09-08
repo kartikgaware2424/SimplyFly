@@ -3,7 +3,8 @@ package com.hexaware.simplyfly.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.hexaware.simplyfly.dto.BookingDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -35,19 +36,24 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+   
     private User passenger; // Passenger who made the booking
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
+    
     private Flight flight;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+   
     private List<Seat> bookedSeats;
 
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Payment payment;
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+   
     private Refund refund;
 }

@@ -19,14 +19,11 @@ import com.hexaware.simplyfly.exception.SeatNotAvailableException;
 import com.hexaware.simplyfly.service.SeatService;
 
 import jakarta.validation.Valid;
+
 /**
- * This class handles seat Controller 
- * Features:
- * add seat
- * get seat by ID
- * get seat by flight
- * get  seat by status
- * get seat  By flight name
+ * This class handles seat Controller Features: add seat get seat by ID get seat
+ * by flight get seat by status get seat By flight name
+ * 
  * @author Kartik Gaware
  * 
  */
@@ -65,6 +62,11 @@ public class SeatController {
 	@PreAuthorize("hasAnyRole('PASSENGER','OWNER','ADMIN')")
 	public List<Seat> getSeatsByFlightName(@PathVariable String flightName) throws SeatNotAvailableException {
 		return seatService.getSeatsByFlightName(flightName);
+	}
+
+	@GetMapping("/getBySeatNumber/{seatNumber}")
+	public List<Seat> getSeatByNumber(@PathVariable String seatNumber) throws SeatNotAvailableException {
+		return seatService.getSeatsBySeatNumber(seatNumber);
 	}
 
 }

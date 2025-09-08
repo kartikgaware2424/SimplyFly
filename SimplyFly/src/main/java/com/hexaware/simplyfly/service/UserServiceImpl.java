@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> getUsersByRole(String role) {
-		return userRepo.findByRole(role);
+	    return userRepo.findByRole(UserRole.valueOf(role.toUpperCase()));
 	}
 
 	@Override

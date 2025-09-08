@@ -2,10 +2,11 @@ package com.hexaware.simplyfly.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,5 +37,6 @@ public class Payment {
 
     @OneToOne()
     @JoinColumn(name = "booking_id", nullable = false, unique = true)
+    @JsonBackReference
     private Booking booking;
 }

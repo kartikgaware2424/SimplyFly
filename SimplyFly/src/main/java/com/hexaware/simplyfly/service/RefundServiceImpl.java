@@ -74,6 +74,34 @@ public class RefundServiceImpl implements RefundService {
 		}
 		return refund;
 	}
+	
+	// RefundService.java
+
+	@Override
+	public Refund updateRefundStatus(int refundId, RefundStatus status) throws RefundNotFoundException {
+	    Refund refund = refundRepo.findById(refundId)
+	            .orElseThrow(() -> new RefundNotFoundException("Refund not found"));
+	    refund.setStatus(status);
+	    return refundRepo.save(refund);
+	}
+
+	@Override
+	public List<Refund> getRefundsByOwner(int ownerId) throws RefundNotFoundException {
+		 List<Refund> refunds = refundRepo.findByBooking_Flight_Owner_UserId(ownerId);
+		    if (refunds.isEmpty()) {
+		        throw new RefundNotFoundException("No refunds found for owner with ID: " + ownerId);
+		    }
+		    return refunds;
+	}
+	
+	
+
+
+
+	
+	
+
+
 
 	
 

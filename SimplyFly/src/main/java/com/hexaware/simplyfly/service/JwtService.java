@@ -9,15 +9,11 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
-
 
 @Service
 public class JwtService {
@@ -29,7 +25,7 @@ public class JwtService {
 	public String createToken(Map<String, Object> claims, String username) {
 
 		return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 
 	}
@@ -41,12 +37,10 @@ public class JwtService {
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public String generateToken(String username) {
-
+	public String generateToken(UserDetails userDetails, String role) {
 		Map<String, Object> claims = new HashMap<>();
-
-		return createToken(claims, username);
-
+		claims.put("role", role);
+		return createToken(claims, userDetails.getUsername());
 	}
 
 	// BELOW METHODS HELP TO READ TOKEN FROM CLIENT AND GET Claims , username, exp
@@ -81,6 +75,10 @@ public class JwtService {
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = extractUsername(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+
+	public String extractRole(String token) {
+		return extractClaim(token, claims -> claims.get("role", String.class));
 	}
 
 }

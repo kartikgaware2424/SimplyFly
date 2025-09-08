@@ -18,4 +18,6 @@ public interface SeatService {
 	Seat addSeat(SeatDto seatDto) throws FlightNotFoundException, BookingNotFoundException;
 
 	List<Seat> getSeatsByFlightName(String flightName) throws SeatNotAvailableException;
+	
+	 List<Seat> getSeatsBySeatNumber(String seatNumber) throws SeatNotAvailableException;
 }

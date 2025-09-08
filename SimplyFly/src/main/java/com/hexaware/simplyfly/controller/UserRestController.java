@@ -6,7 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.hexaware.simplyfly.dto.AuthRequest;
 import com.hexaware.simplyfly.entity.User;
 import com.hexaware.simplyfly.service.JwtService;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/auth")
 public class UserRestController {
@@ -42,7 +44,17 @@ public class UserRestController {
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
             if (auth.isAuthenticated()) {
-                String token = jwtService.generateToken(authRequest.getEmail());
+                // ✅ Load user to extract role
+                User user = userServiceImpl.getUserByEmail(authRequest.getEmail());
+                UserDetails userDetails = userServiceImpl.loadUserByUsername(authRequest.getEmail());
+
+                String role = "USER";
+                if (user.getRole() != null) {
+                    role = user.getRole().name(); // enum or string in your entity
+                }
+
+                // ✅ generate token with role
+                String token = jwtService.generateToken(userDetails, role);
                 return ResponseEntity.ok(token);
             }
         } catch (AuthenticationException e) {
@@ -50,5 +62,4 @@ public class UserRestController {
         }
         return ResponseEntity.status(401).body("Authentication failed");
     }
-   
 }

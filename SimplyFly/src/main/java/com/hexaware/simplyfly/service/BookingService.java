@@ -17,4 +17,6 @@ public interface BookingService {
 	List<Booking> getBookingsByStatus(String status) throws BookingNotFoundException;
 
 	Booking addBooking(BookingDto bookingDto) throws BookingNotFoundException, FlightNotFoundException;
+	
+	String cancelBooking(int bookingId) throws BookingNotFoundException;
 }

@@ -89,4 +89,11 @@ public class SeatServiceImpl implements SeatService {
 		}
 		return seats;
 	}
+
+	 @Override
+	    public List<Seat> getSeatsBySeatNumber(String seatNumber) throws SeatNotAvailableException {
+	        List<Seat> seats = seatRepo.findBySeatNumber(seatNumber);
+	        if (seats.isEmpty()) throw new SeatNotAvailableException("Seat not available: " + seatNumber);
+	        return seats;
+	    }
 }
